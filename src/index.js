@@ -87,6 +87,7 @@ export default class Gantt {
             date_format: 'YYYY-MM-DD',
             popup_trigger: 'click',
             custom_popup_html: null,
+            current_day: date_utils.today(),
             language: 'en'
         };
         this.options = Object.assign({}, default_options, options);
@@ -229,9 +230,9 @@ export default class Gantt {
         this.gantt_end = date_utils.start_of(this.gantt_end, 'day');
 
         // add date padding on both sides
-        if (this.view_is([VIEW_MODE.HOUR, VIEW_MODE.QUARTER_DAY, VIEW_MODE.HALF_DAY])) {
-            this.gantt_start = this.gantt_start; // date_utils.add(this.gantt_start, -1, 'day');
-            this.gantt_end = date_utils.add(this.gantt_end, 1, 'day');
+        if (this.view_is([VIEW_MODE.HOUR, VIEW_MODE.QUARTER_DAY, VIEW_MODE.HALF_DAY, VIEW_MODE.DAY])) {
+            this.gantt_start =  this.options.current_day; // this.gantt_start; // date_utils.add(this.gantt_start, -1, 'day');
+            this.gantt_end =   date_utils_add(this.options.current_day, 1, 'day'); // this.gantt_end === this.gantt_start ? date_utils.add(this.gantt_end, 1, 'day') : this.gantt_end; // date_utils.add(this.gantt_end, 1, 'day');
         } else if (this.view_is(VIEW_MODE.MONTH)) {
             this.gantt_start = date_utils.start_of(this.gantt_start, 'year');
             this.gantt_end = date_utils.add(this.gantt_end, 1, 'year');
