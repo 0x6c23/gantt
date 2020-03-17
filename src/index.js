@@ -185,7 +185,7 @@ export default class Gantt {
         this.options.view_mode = view_mode;
 
         if (view_mode === VIEW_MODE.HOUR) {
-            this.options.step = 24 / 24;
+            this.options.step = 24 / 48;
             this.options.column_width = 38;
         } else if (view_mode === VIEW_MODE.DAY) {
             this.options.step = 24;
