@@ -502,7 +502,7 @@ export default class Gantt {
             ),
             Hour_lower: date_utils.format(
                 date,
-                'HH',
+                'HH:mm',
                 this.options.language
             ),
             Day_lower:
