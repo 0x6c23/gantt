@@ -230,17 +230,17 @@ export default class Gantt {
 
         // add date padding on both sides
         if (this.view_is([VIEW_MODE.HOUR, VIEW_MODE.QUARTER_DAY, VIEW_MODE.HALF_DAY])) {
-            this.gantt_start = date_utils.add(this.gantt_start, 0, 'day');
-            this.gantt_end = date_utils.add(this.gantt_end, 0, 'day');
+            this.gantt_start = this.gantt_start; // date_utils.add(this.gantt_start, -7, 'day');
+            this.gantt_end = this.gantt_end; // date_utils.add(this.gantt_end, 7, 'day');
         } else if (this.view_is(VIEW_MODE.MONTH)) {
             this.gantt_start = date_utils.start_of(this.gantt_start, 'year');
-            this.gantt_end = date_utils.add(this.gantt_end, 0, 'year');
+            this.gantt_end = date_utils.add(this.gantt_end, 1, 'year');
         } else if (this.view_is(VIEW_MODE.YEAR)) {
-            this.gantt_start = date_utils.add(this.gantt_start, 0, 'year');
-            this.gantt_end = date_utils.add(this.gantt_end, 0, 'year');
+            this.gantt_start = date_utils.add(this.gantt_start, -2, 'year');
+            this.gantt_end = date_utils.add(this.gantt_end, 2, 'year');
         } else {
-            this.gantt_start = date_utils.add(this.gantt_start, 0, 'month');
-            this.gantt_end = date_utils.add(this.gantt_end, 0, 'month');
+            this.gantt_start = date_utils.add(this.gantt_start, -1, 'month');
+            this.gantt_end = date_utils.add(this.gantt_end, 1, 'month');
         }
     }
 
