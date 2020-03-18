@@ -731,12 +731,10 @@ export default class Gantt {
                       // Prevent scaling beyond left edge
                       let newX = $bar.ox + $bar.finaldx;
                       if(newX >= this.options.column_width){
-                        // prevent resizing smaller than 1 step
-                        if(){
+                        // prevent resizing smaller than 1 step // maybe todo
                           bar.update_bar_position({
                               x: newX
                           });
-                        }
                       }
                     }
                 } else if (is_resizing_right) {
