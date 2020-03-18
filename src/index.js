@@ -715,7 +715,7 @@ export default class Gantt {
             const dy = e.offsetY - y_on_start;
 
             // TODO: 48 is hardcoded value for daily view (half hour steps so 48 in total for 1 day)
-            const maxWidth = 48 * this.options.column_width;
+            const maxWidth = (48 * this.options.column_width) - this.options.column_width;
 
             bars.forEach(bar => {
                 const $bar = bar.$bar;
@@ -746,6 +746,8 @@ export default class Gantt {
                     }
                 } else if (is_dragging) {
                     let newX = $bar.ox + $bar.finaldx;
+
+                    console.log(`Dragging, current X: ${newX}, Current X of rightmost position: ${newX + $bar.owidth}, MaxWidth: ${maxWidth}`);
 
                     // Prevent dragging outside of chart area
                     if(newX >= this.options.column_width && (newX + $bar.owidth) <= maxWidth){
