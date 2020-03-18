@@ -722,6 +722,8 @@ export default class Gantt {
                 $bar.finaldx = this.get_snap_position(dx);
 
                 if (is_resizing_left) {
+
+
                     if (parent_bar_id === bar.task.id) {
                         bar.update_bar_position({
                             x: $bar.ox + $bar.finaldx,
@@ -730,6 +732,9 @@ export default class Gantt {
                     } else {
                       // Prevent scaling beyond left edge
                       let newX = $bar.ox + $bar.finaldx;
+
+                     console.log(`Resizing left, newX ${newX} colWidth ${this.options.column_width} -colWidth ${this.options.column_width}`);
+
                       if(newX >= -this.options.column_width){ // >= this.options.column_width
                         // prevent resizing smaller than 1 step // maybe todo
                           bar.update_bar_position({
@@ -751,8 +756,10 @@ export default class Gantt {
                 } else if (is_dragging) {
                     let newX = $bar.ox + $bar.finaldx;
 
+                    console.log( `Dragging, newX ${newX} -colWidth ${-this.options.column_width}  finaldx ${$bar.finaldx}` );
+
                     // Prevent dragging outside of chart area
-                    if(newX >= -this.options.column_width && (newX + $bar.owidth) <= maxWidth){
+                    if(newX >= this.options.column_width && (newX + $bar.owidth) <= maxWidth){
                       bar.update_bar_position({ x: $bar.ox + $bar.finaldx });
                     }
                 }
