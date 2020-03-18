@@ -724,24 +724,28 @@ export default class Gantt {
                 if (is_resizing_left) {
 
 
-                    if (parent_bar_id === bar.task.id) {
-                        bar.update_bar_position({
-                            x: $bar.ox + $bar.finaldx,
-                            width: $bar.owidth - $bar.finaldx
-                        });
-                    } else {
+                    // if (parent_bar_id === bar.task.id) {
+                    //     bar.update_bar_position({
+                    //         x: $bar.ox + $bar.finaldx,
+                    //         width: $bar.owidth - $bar.finaldx
+                    //     });
+                    // } else {
                       // Prevent scaling beyond left edge
                       let newX = $bar.ox + $bar.finaldx;
 
-                     console.log(`Resizing left, newX ${newX} colWidth ${this.options.column_width} -colWidth ${this.options.column_width}`);
+                     // console.log(`Resizing left, newX ${newX} colWidth ${this.options.column_width} -colWidth ${this.options.column_width}`);
 
                       if(newX >= 0){ // >= this.options.column_width
                         // prevent resizing smaller than 1 step // maybe todo
                           bar.update_bar_position({
                               x: newX
                           });
+                      } else {
+                        bar.update_bar_position({
+                            x: 0
+                        });
                       }
-                    }
+                    // }
                 } else if (is_resizing_right) {
                     // prevent scaling beyond right edge
                     let newWidth = ($bar.owidth + $bar.finaldx) + $bar.ox;
