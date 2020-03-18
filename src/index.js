@@ -730,7 +730,7 @@ export default class Gantt {
                     } else {
                       // Prevent scaling beyond left edge
                       let newX = $bar.ox + $bar.finaldx;
-                      if(newX >= (this.options.column_width * -1))){ // >= this.options.column_width
+                      if(newX >= -this.options.column_width){ // >= this.options.column_width
                         // prevent resizing smaller than 1 step // maybe todo
                           bar.update_bar_position({
                               x: newX
@@ -752,7 +752,7 @@ export default class Gantt {
                     let newX = $bar.ox + $bar.finaldx;
 
                     // Prevent dragging outside of chart area
-                    if(newX >= (this.options.column_width * -1) && (newX + $bar.owidth) <= maxWidth){
+                    if(newX >= -this.options.column_width && (newX + $bar.owidth) <= maxWidth){
                       bar.update_bar_position({ x: $bar.ox + $bar.finaldx });
                     }
                 }
