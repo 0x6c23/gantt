@@ -761,6 +761,9 @@ export default class Gantt {
                     // Prevent dragging outside of chart area
                     if(newX >= 0 && (newX + $bar.owidth) <= maxWidth){
                       bar.update_bar_position({ x: $bar.ox + $bar.finaldx });
+                    } else {
+                      console.log('STOPPING DRAG');
+                      console.log(`NEWX: ${newX} ox ${$bar.ox} finaldx ${$bar.finaldx}`);
                     }
                 }
             });
