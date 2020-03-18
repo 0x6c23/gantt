@@ -722,30 +722,28 @@ export default class Gantt {
                 $bar.finaldx = this.get_snap_position(dx);
 
                 if (is_resizing_left) {
+                  let newX = $bar.ox + $bar.finaldx;
 
-
-                    // if (parent_bar_id === bar.task.id) {
-                    //     bar.update_bar_position({
-                    //         x: $bar.ox + $bar.finaldx,
-                    //         width: $bar.owidth - $bar.finaldx
-                    //     });
-                    // } else {
+                    if (parent_bar_id === bar.task.id) {
+                      if(newX >= 0){
+                        bar.update_bar_position({
+                            x: newX,
+                            width: $bar.owidth - $bar.finaldx
+                        });
+                      }
+                    } else {
                       // Prevent scaling beyond left edge
-                      let newX = $bar.ox + $bar.finaldx;
 
-                     // console.log(`Resizing left, newX ${newX} colWidth ${this.options.column_width} -colWidth ${this.options.column_width}`);
+
+                     console.log(`Resizing left, newX ${newX} colWidth ${this.options.column_width} -colWidth ${this.options.column_width}`);
 
                       if(newX >= 0){ // >= this.options.column_width
                         // prevent resizing smaller than 1 step // maybe todo
                           bar.update_bar_position({
                               x: newX
                           });
-                      } else {
-                        bar.update_bar_position({
-                            x: 0
-                        });
                       }
-                    // }
+                    }
                 } else if (is_resizing_right) {
                     // prevent scaling beyond right edge
                     let newWidth = ($bar.owidth + $bar.finaldx) + $bar.ox;
@@ -763,10 +761,8 @@ export default class Gantt {
                     // console.log( `Dragging, newX ${newX} -colWidth ${-this.options.column_width}  finaldx ${$bar.finaldx}` );
 
                     // Prevent dragging outside of chart area
-                    if(newX >= 0 && (newX + $bar.owidth) <= maxWidth){
+                    if(newX >= -1 && (newX + $bar.owidth) <= maxWidth){
                       bar.update_bar_position({ x: $bar.ox + $bar.finaldx });
-                    } else {
-                      if(newX <= 0) bar.update_bar_position({ x: 0 });
                     }
                 }
             });
