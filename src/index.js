@@ -715,7 +715,7 @@ export default class Gantt {
             const dy = e.offsetY - y_on_start;
 
             // TODO: 48 is hardcoded value for daily view (half hour steps so 48 in total for 1 day)
-            const maxWidth = (48 * this.options.column_width) + this.options.column_width;
+            const maxWidth = (48 * this.options.column_width) //+ this.options.column_width;
 
             bars.forEach(bar => {
                 const $bar = bar.$bar;
@@ -730,7 +730,7 @@ export default class Gantt {
                     } else {
                       // Prevent scaling beyond left edge
                       let newX = $bar.ox + $bar.finaldx;
-                      if(newX >= this.options.column_width){
+                      if(newX >= 0){ // >= this.options.column_width
                         // prevent resizing smaller than 1 step // maybe todo
                           bar.update_bar_position({
                               x: newX
@@ -742,7 +742,6 @@ export default class Gantt {
                     let newWidth = ($bar.owidth + $bar.finaldx) + $bar.ox;
 
                     console.log(`Resizing, newWidth ${newWidth} oWidth ${$bar.owidth} ox ${$bar.ox} finaldx ${$bar.finaldx}`);
-
 
                     if (parent_bar_id === bar.task.id && newWidth <= maxWidth) {
                         bar.update_bar_position({
