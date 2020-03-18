@@ -713,7 +713,9 @@ export default class Gantt {
             if (!action_in_progress()) return;
             const dx = e.offsetX - x_on_start;
             const dy = e.offsetY - y_on_start;
-            const maxWidth = this.options.step * this.options.column_width;
+
+            // TODO: 48 is hardcoded value for daily view (half hour steps so 48 in total for 1 day)
+            const maxWidth = 48 * this.options.column_width;
 
             bars.forEach(bar => {
                 const $bar = bar.$bar;
@@ -727,21 +729,28 @@ export default class Gantt {
                         });
                     } else {
                       // Prevent scaling beyond left edge
-                      if(($bar.ox + $bar.finaldx) >= this.options.column_width){
+                      let newX = $bar.ox + $bar.finaldx;
+                      if(newX >= this.options.column_width){
                         bar.update_bar_position({
-                            x: $bar.ox + $bar.finaldx
+                            x: newX
                         });
                       }
                     }
                 } else if (is_resizing_right) {
-                  // prevent scaling beyond right edge
-                    if (parent_bar_id === bar.task.id && ($bar.owidth + $bar.finaldx) <= maxWidth) {
+                    // prevent scaling beyond right edge
+                    let newWidth = $bar.owidth + $bar.finaldx;
+                    if (parent_bar_id === bar.task.id && newWidth <= maxWidth) {
                         bar.update_bar_position({
                             width: $bar.owidth + $bar.finaldx
                         });
                     }
                 } else if (is_dragging) {
-                    bar.update_bar_position({ x: $bar.ox + $bar.finaldx });
+                    let newX = $bar.ox + $bar.finaldx;
+
+                    // Prevent dragging outside of chart area
+                    if(newX >= this.options.column_width && (newX + $bar.owidth) <= maxWidth){
+                      bar.update_bar_position({ x: $bar.ox + $bar.finaldx });
+                    }
                 }
             });
         });
