@@ -738,7 +738,11 @@ export default class Gantt {
                     }
                 } else if (is_resizing_right) {
                     // prevent scaling beyond right edge
-                    let newWidth = $bar.owidth + $bar.finaldx;
+                    let newWidth = ($bar.owidth + $bar.finaldx) + $bar.ox;
+
+                    console.log(`Resizing, newWidth ${newWidth} oWidth ${$bar.owidth} ox ${$bar.ox} finaldx ${$bar.finaldx}`);
+
+
                     if (parent_bar_id === bar.task.id && newWidth <= maxWidth) {
                         bar.update_bar_position({
                             width: $bar.owidth + $bar.finaldx
@@ -746,8 +750,6 @@ export default class Gantt {
                     }
                 } else if (is_dragging) {
                     let newX = $bar.ox + $bar.finaldx;
-
-                    console.log(`Dragging, current X: ${newX}, Current X of rightmost position: ${newX + $bar.owidth}, MaxWidth: ${maxWidth}`);
 
                     // Prevent dragging outside of chart area
                     if(newX >= this.options.column_width && (newX + $bar.owidth) <= maxWidth){
