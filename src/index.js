@@ -186,7 +186,7 @@ export default class Gantt {
 
         if (view_mode === VIEW_MODE.HOUR) {
             this.options.step = 0.5;
-            this.options.column_width = 38;
+            this.options.column_width = this.options.column_width; // 38
         } else if (view_mode === VIEW_MODE.DAY) {
             this.options.step = 24;
             this.options.column_width = 38;
@@ -713,6 +713,7 @@ export default class Gantt {
             if (!action_in_progress()) return;
             const dx = e.offsetX - x_on_start;
             const dy = e.offsetY - y_on_start;
+            const maxWidth = this.options.step * this.options.column_width;
 
             bars.forEach(bar => {
                 const $bar = bar.$bar;
@@ -725,12 +726,16 @@ export default class Gantt {
                             width: $bar.owidth - $bar.finaldx
                         });
                     } else {
+                      // Prevent scaling beyond left edge
+                      if(($bar.ox + $bar.finaldx) >= this.options.column_width){
                         bar.update_bar_position({
                             x: $bar.ox + $bar.finaldx
                         });
+                      }
                     }
                 } else if (is_resizing_right) {
-                    if (parent_bar_id === bar.task.id) {
+                  // prevent scaling beyond right edge
+                    if (parent_bar_id === bar.task.id && ($bar.owidth + $bar.finaldx) <= maxWidth) {
                         bar.update_bar_position({
                             width: $bar.owidth + $bar.finaldx
                         });
