@@ -195,6 +195,10 @@ export default class Bar {
     show_popup() {
         if (this.gantt.bar_being_dragged) return;
 
+        //
+        return;
+        ////
+
         const start_date = date_utils.format(this.task._start, 'MMM D', this.gantt.options.language);
         const end_date = date_utils.format(
             date_utils.add(this.task._end, -1, 'second'),
@@ -276,14 +280,14 @@ export default class Bar {
         const x_in_units = bar.getX() / this.gantt.options.column_width;
         const new_start_date = date_utils.add(
             this.gantt.gantt_start,
-            x_in_units * this.gantt.options.step,
-            'hour'
+            (x_in_units * this.gantt.options.step) * 60,
+            'minute'
         );
         const width_in_units = bar.getWidth() / this.gantt.options.column_width;
         const new_end_date = date_utils.add(
             new_start_date,
-            width_in_units * this.gantt.options.step,
-            'hour'
+            (width_in_units * this.gantt.options.step) * 60,
+            'minute'
         );
 
         return { new_start_date, new_end_date };
