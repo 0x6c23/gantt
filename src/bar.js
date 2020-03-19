@@ -304,7 +304,7 @@ export default class Bar {
         const task_start = this.task._start;
         const gantt_start = this.gantt.gantt_start;
 
-        const diff = date_utils.diff(task_start, gantt_start, 'hour');
+        const diff = date_utils.diff(task_start, gantt_start, 'minute') * 60;
         let x = diff / step * column_width;
 
         if (this.gantt.view_is('Month')) {
