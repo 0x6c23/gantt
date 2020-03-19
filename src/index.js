@@ -98,8 +98,8 @@ export default class Gantt {
         this.tasks = tasks.map((task, i) => {
             // convert to Date objects
             //
-            task._start = task._start.substring(0, 16).replace('T',' ');
-            task._end = task._end.substring(0, 16).replace('T',' ');
+            task.start = task.start.substring(0, 16).replace('T',' ');
+            task.end = task.end.substring(0, 16).replace('T',' ');
 
             task._start = date_utils.parse(task.start);
             task._end = date_utils.parse(task.end);
