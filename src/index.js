@@ -724,14 +724,17 @@ export default class Gantt {
                 if (is_resizing_left) {
                     let newX = $bar.ox + $bar.finaldx;
 
-                    console.log(`Resizing left, newX ${newX} oX ${$bar.ox} oWidth ${$bar.owidth} finalDx ${$bar.finaldx}`);
+                    // console.log(`Resizing left, newX ${newX} oX ${$bar.ox} oWidth ${$bar.owidth} finalDx ${$bar.finaldx}`);
 
 
                     if (parent_bar_id === bar.task.id) {
+                      if(newX >= this.optionx.column_width-2){
                         bar.update_bar_position({
                             x: newX,
                             width: $bar.owidth - $bar.finaldx
                         });
+                      }
+
                     } else {
                       // Prevent scaling beyond left edge
                       if(newX >= 0){ // >= this.options.column_width
