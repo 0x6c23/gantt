@@ -278,17 +278,42 @@ export default class Bar {
     compute_start_end_date() {
         const bar = this.$bar;
         const x_in_units = bar.getX() / this.gantt.options.column_width;
-        const new_start_date = date_utils.add(
-            this.gantt.gantt_start,
-            (x_in_units * this.gantt.options.step) * 60,
-            'minute'
-        );
+
+        let new_start_date;
+
+        if(this.gantt.view_is('Hour')){
+          new_start_date = date_utils.add(
+              this.gantt.gantt_start,
+              (x_in_units * this.gantt.options.step) * 60,
+              'minute'
+          )
+        } else {
+          new_start_date = date_utils.add(
+              this.gantt.gantt_start,
+              x_in_units * this.gantt.options.step,
+              'hour'
+          )
+        }
+
+
         const width_in_units = bar.getWidth() / this.gantt.options.column_width;
-        const new_end_date = date_utils.add(
-            new_start_date,
-            (width_in_units * this.gantt.options.step) * 60,
-            'minute'
-        );
+
+
+        let new_end_date;
+
+        if(this.gantt.view_is('Hour')){
+          new_end_date = date_utils.add(
+              this.gantt.gantt_start,
+              (x_in_units * this.gantt.options.step) * 60,
+              'minute'
+          )
+        } else {
+          new_end_date = date_utils.add(
+              new_start_date,
+              width_in_units * this.gantt.options.step,
+              'hour'
+          );
+        }
 
         return { new_start_date, new_end_date };
     }
@@ -304,7 +329,16 @@ export default class Bar {
         const task_start = this.task._start;
         const gantt_start = this.gantt.gantt_start;
 
-        const diff = date_utils.diff(task_start, gantt_start, 'minute') / 60;
+        let diff;
+
+        if(this.gantt.view_is('Hour')){
+          diff = date_utils.diff(task_start, gantt_start, 'minute') / 60;
+        } else {
+          diff = date_utils.diff(task_start, gantt_start, 'hour');
+        }
+
+
+
         let x = diff / step * column_width;
 
         if (this.gantt.view_is('Month')) {
