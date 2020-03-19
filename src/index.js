@@ -728,7 +728,7 @@ export default class Gantt {
 
 
                     if (parent_bar_id === bar.task.id) {
-                      if(newX >= this.optionx.column_width-2){
+                      if(newX >= this.options.column_width-2){
                         bar.update_bar_position({
                             x: newX,
                             width: $bar.owidth - $bar.finaldx
