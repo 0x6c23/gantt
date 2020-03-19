@@ -239,8 +239,7 @@ export default class Gantt {
         if (this.view_is([VIEW_MODE.HOUR])) {
             this.gantt_start =  date_utils.add(date_utils.start_of(this.current_day, 'day'), -30, 'minute'); // this.gantt_start; // date_utils.add(this.gantt_start, -1, 'day');
             this.gantt_end   =  date_utils.add(date_utils.start_of(this.current_day, 'day'), 24, 'hour'); // this.gantt_end === this.gantt_start ? date_utils.add(this.gantt_end, 1, 'day') : this.gantt_end; // date_utils.add(this.gantt_end, 1, 'day');
-        }
-        else if (this.view_is([VIEW_MODE.QUARTER_DAY, VIEW_MODE.HALF_DAY, VIEW_MODE.DAY])) {
+        } else if (this.view_is([VIEW_MODE.QUARTER_DAY, VIEW_MODE.HALF_DAY, VIEW_MODE.DAY])) {
             this.gantt_start =  date_utils.add(this.gantt_start, -7, 'day');
             this.gantt_end   =  date_utils.add(this.gantt_end, 7, 'day');
         } else if (this.view_is(VIEW_MODE.MONTH)) {
@@ -267,12 +266,18 @@ export default class Gantt {
                     cur_date = date_utils.add(cur_date, 1, 'year');
                 } else if (this.view_is(VIEW_MODE.MONTH)) {
                     cur_date = date_utils.add(cur_date, 1, 'month');
-                } else {
+                } else if (this.view_is(VIEW_MODE.HOUR)){
                     cur_date = date_utils.add(
                         cur_date,
-                        30, //this.options.step,
-                         'minute'// 'hour'
+                        30,
+                        'minute'
                     );
+                } else {
+                  cur_date = date_utils.add(
+                      cur_date,
+                      this.options.step,
+                      'hour'
+                  );
                 }
             }
             this.dates.push(cur_date);
@@ -723,7 +728,13 @@ export default class Gantt {
             const dy = e.offsetY - y_on_start;
 
             // TODO: 48 is hardcoded value for daily view (half hour steps so 48 in total for 1 day)
-            const maxWidth = (48 * this.options.column_width) + this.options.column_width;
+            let maxWidth;
+
+            if(this.view_is(VIEW_MODE.HOUR)){
+              maxWidth = (48 * this.options.column_width) + this.options.column_width;
+            } else {
+              maxWidth = (this.options.step * this.options.column_width) + this.options.column_width;
+            }
 
             bars.forEach(bar => {
                 const $bar = bar.$bar;
