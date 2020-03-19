@@ -715,7 +715,7 @@ export default class Gantt {
             const dy = e.offsetY - y_on_start;
 
             // TODO: 48 is hardcoded value for daily view (half hour steps so 48 in total for 1 day)
-            const maxWidth = (48 * this.options.column_width) //+ this.options.column_width;
+            const maxWidth = (48 * this.options.column_width) + this.options.column_width;
 
             bars.forEach(bar => {
                 const $bar = bar.$bar;
@@ -725,7 +725,7 @@ export default class Gantt {
                   let newX = $bar.ox + $bar.finaldx;
 
                     if (parent_bar_id === bar.task.id) {
-                      if(newX >= 0){
+                      if(newX >= -1){
                         bar.update_bar_position({
                             x: newX,
                             width: $bar.owidth - $bar.finaldx
