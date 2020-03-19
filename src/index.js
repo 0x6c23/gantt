@@ -725,12 +725,10 @@ export default class Gantt {
                   let newX = $bar.ox + $bar.finaldx;
 
                     if (parent_bar_id === bar.task.id) {
-                      if(newX >= -1){
                         bar.update_bar_position({
                             x: newX,
                             width: $bar.owidth - $bar.finaldx
                         });
-                      }
                     } else {
                       // Prevent scaling beyond left edge
 
