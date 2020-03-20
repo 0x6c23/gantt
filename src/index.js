@@ -242,10 +242,12 @@ export default class Gantt {
         } else if (this.view_is([VIEW_MODE.QUARTER_DAY, VIEW_MODE.HALF_DAY])) {
             this.gantt_start =  date_utils.add(this.gantt_start, -7, 'day');
             this.gantt_end   =  date_utils.add(this.gantt_end, 7, 'day');
-        } else if (this.view_is(VIEW_MODE.DAY)) {
-            this.gantt_start =  date_utils.add(this.gantt_start, -14, 'day');
-            this.gantt_end   =  date_utils.add(this.gantt_end, 14, 'day');
-        } else if (this.view_is(VIEW_MODE.MONTH)) {
+        }
+        // else if (this.view_is(VIEW_MODE.DAY)) {
+        //     this.gantt_start =  date_utils.add(this.gantt_start, -14, 'day');
+        //     this.gantt_end   =  date_utils.add(this.gantt_end, 14, 'day');
+        // }
+        else if (this.view_is(VIEW_MODE.MONTH)) {
             this.gantt_start = date_utils.start_of(this.gantt_start, 'year');
             this.gantt_end = date_utils.add(this.gantt_end, 1, 'year');
         } else if (this.view_is(VIEW_MODE.YEAR)) {
@@ -576,7 +578,7 @@ export default class Gantt {
             'Half Day_upper': 0,
             Hour_lower: 0,
             Hour_upper: this.options.column_width * 24 / 2,
-            Day_lower: this.options.column_width / 2,
+            Day_lower: this.options.column_width, // / 2,
             Day_upper: this.options.column_width * 30 / 2,
             Week_lower: 0,
             Week_upper: this.options.column_width * 4 / 2,
