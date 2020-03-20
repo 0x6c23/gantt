@@ -578,7 +578,7 @@ export default class Gantt {
             'Half Day_upper': 0,
             Hour_lower: 0,
             Hour_upper: this.options.column_width * 24 / 2,
-            Day_lower: this.options.column_width, // / 2,
+            Day_lower: this.options.column_width / 2,
             Day_upper: this.options.column_width * 30 / 2,
             Week_lower: 0,
             Week_upper: this.options.column_width * 4 / 2,
