@@ -265,7 +265,7 @@ export default class Gantt {
 
         while (cur_date === null || cur_date < this.gantt_end) {
             if (!cur_date) {
-                cur_date = date_utils.clone(this.gantt_start).utc();
+                cur_date = date_utils.clone(this.gantt_start);
             } else {
                 if (this.view_is(VIEW_MODE.YEAR)) {
                     cur_date = date_utils.add(cur_date, 1, 'year');
