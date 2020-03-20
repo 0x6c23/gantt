@@ -242,6 +242,9 @@ export default class Gantt {
         } else if (this.view_is([VIEW_MODE.QUARTER_DAY, VIEW_MODE.HALF_DAY])) {
             this.gantt_start =  date_utils.add(this.gantt_start, -7, 'day');
             this.gantt_end   =  date_utils.add(this.gantt_end, 7, 'day');
+        } else if (this.view_is(VIEW_MODE.DAY)) {
+            this.gantt_start =  date_utils.add(this.gantt_start, -14, 'day');
+            this.gantt_end   =  date_utils.add(this.gantt_end, 14, 'day');
         } else if (this.view_is(VIEW_MODE.MONTH)) {
             this.gantt_start = date_utils.start_of(this.gantt_start, 'year');
             this.gantt_end = date_utils.add(this.gantt_end, 1, 'year');
@@ -769,10 +772,13 @@ export default class Gantt {
 
                     console.log(`Resizing, newWidth ${newWidth} oWidth ${$bar.owidth} ox ${$bar.ox} finaldx ${$bar.finaldx}`);
 
-                    if (parent_bar_id === bar.task.id && newWidth <= maxWidth) {
+                    if (parent_bar_id === bar.task.id) {
+                      if(!this.view_is(VIEW_MODE.HOUR) || newWidth <= maxWidth){
                         bar.update_bar_position({
                             width: $bar.owidth + $bar.finaldx
                         });
+                      }
+
                     }
                 } else if (is_dragging) {
                     let newX = $bar.ox + $bar.finaldx;
