@@ -752,7 +752,7 @@ export default class Gantt {
 
 
                     if (parent_bar_id === bar.task.id) {
-                      if(newX >= this.options.column_width-2){
+                      if(newX >= this.options.column_width-2 || !this.view_is(VIEW_MODE.HOUR)){
                         bar.update_bar_position({
                             x: newX,
                             width: $bar.owidth - $bar.finaldx
@@ -775,8 +775,7 @@ export default class Gantt {
                     console.log(`Resizing, newWidth ${newWidth} oWidth ${$bar.owidth} ox ${$bar.ox} finaldx ${$bar.finaldx}`);
 
                     if (parent_bar_id === bar.task.id) {
-
-                      if(newWidth <= maxWidth){
+                      if(!this.view_is(VIEW_MODE.HOUR) || newWidth <= maxWidth){
                         bar.update_bar_position({
                             width: $bar.owidth + $bar.finaldx
                         });
@@ -789,7 +788,7 @@ export default class Gantt {
                     // console.log( `Dragging, newX ${newX} -colWidth ${-this.options.column_width}  finaldx ${$bar.finaldx}` );
 
                     // Prevent dragging outside of chart area
-                    if(newX >= -1 && (newX + $bar.owidth) <= maxWidth ){
+                    if(newX >= -1 && (newX + $bar.owidth) <= maxWidth || !this.view_is(VIEW_MODE.HOUR)){
                       bar.update_bar_position({ x: $bar.ox + $bar.finaldx });
                     }
                 }
