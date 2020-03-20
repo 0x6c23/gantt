@@ -747,7 +747,7 @@ export default class Gantt {
 
 
                     if (parent_bar_id === bar.task.id) {
-                      if(newX >= this.options.column_width-2){
+                      if(newX >= this.options.column_width-2 || !this.view_is(VIEW_MODE.HOUR)){
                         bar.update_bar_position({
                             x: newX,
                             width: $bar.owidth - $bar.finaldx
@@ -756,7 +756,7 @@ export default class Gantt {
 
                     } else {
                       // Prevent scaling beyond left edge
-                      if(newX >= 0){ // >= this.options.column_width
+                      if(newX >= 0 || !this.view_is(VIEW_MODE.HOUR)){ // >= this.options.column_width
                         // prevent resizing smaller than 1 step // maybe todo
                           bar.update_bar_position({
                               x: newX
@@ -780,7 +780,7 @@ export default class Gantt {
                     // console.log( `Dragging, newX ${newX} -colWidth ${-this.options.column_width}  finaldx ${$bar.finaldx}` );
 
                     // Prevent dragging outside of chart area
-                    if(newX >= -1 && (newX + $bar.owidth) <= maxWidth){
+                    if(newX >= -1 && (newX + $bar.owidth) <= maxWidth || !this.view_is(VIEW_MODE.HOUR)){
                       bar.update_bar_position({ x: $bar.ox + $bar.finaldx });
                     }
                 }
