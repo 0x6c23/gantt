@@ -33,7 +33,7 @@ export default class Bar {
               this.gantt.options.step;
         } else {
           this.duration =
-              date_utils.diff(this.task._end, this.task._start, 'hour' /
+              date_utils.diff(this.task._end, this.task._start, 'hour') /
               this.gantt.options.step;
         }
 
