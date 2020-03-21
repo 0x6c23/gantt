@@ -307,13 +307,15 @@ export default class Bar {
 
         const width_in_units = bar.getWidth() / this.gantt.options.column_width;
 
+        console.log( '--- COMPUTE START/END DATE ---');
+        console.log(` NEW START DATE: ${new_start_date}`);
 
         let new_end_date;
 
         if(this.gantt.view_is('Hour')){
           new_end_date = date_utils.add(
               new_start_date,
-              (width_in_units * this.gantt.options.step) * 60,
+              Math.round(width_in_units * this.gantt.options.step) * 60,
               'minute'
           )
         } else {
@@ -323,6 +325,9 @@ export default class Bar {
               'hour'
           );
         }
+
+        console.log(` NEW END DATE: ${new_end_date}`);
+        console.log(' ----------  ');
 
         return { new_start_date, new_end_date };
     }
@@ -345,7 +350,6 @@ export default class Bar {
         } else {
           diff = date_utils.diff(task_start, gantt_start, 'hour');
         }
-
 
 
         let x = diff / step * column_width;
