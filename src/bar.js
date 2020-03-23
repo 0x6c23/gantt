@@ -266,10 +266,14 @@ export default class Bar {
 
         if (!changed) return;
 
+        var secondsToAdd = 0;
+
+        if(!this.gantt.view_is('Hour')) secondsToAdd = -1;
+
         this.gantt.trigger_event('date_change', [
             this.task,
             new_start_date,
-            date_utils.add(new_end_date, -1, 'second')
+            date_utils.add(new_end_date, secondsToAdd, 'second')
         ]);
     }
 
