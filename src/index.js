@@ -343,14 +343,10 @@ export default class Gantt {
             append_to: this.layers.grid
         });
 
-        // $.attr(this.$svg, {
-        //     height: grid_height + this.options.padding + 100,
-        //     width: '100%'
-        // });
-          $.attr(this.$svg, {
-              height: grid_height,//+ this.options.padding + 100,
-              width: grid_width
-          });
+        $.attr(this.$svg, {
+            height: grid_height + this.options.padding + 100,
+            width: '100%'
+        });
     }
 
     make_grid_rows() {
@@ -643,15 +639,13 @@ export default class Gantt {
     }
 
     set_width() {
-        // const cur_width = this.$svg.getBoundingClientRect().width;
+        const cur_width = this.$svg.getBoundingClientRect().width;
         const actual_width = this.$svg
             .querySelector('.grid .grid-row')
             .getAttribute('width');
-        // if (cur_width < actual_width) {
-        //     this.$svg.setAttribute('width', actual_width);
-        // }
-
-        this.$svg.setAttribute('width', actual_width);
+        if (cur_width < actual_width) {
+            this.$svg.setAttribute('width', actual_width);
+        }
     }
 
     set_scroll_position() {
