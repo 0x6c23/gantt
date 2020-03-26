@@ -193,22 +193,22 @@ export default class Gantt {
             this.options.column_width = this.options.column_width; // 38
         } else if (view_mode === VIEW_MODE.DAY) {
             this.options.step = 24;
-            this.options.column_width = 38;
+            this.options.column_width = this.options.column_width;// 38;
         } else if (view_mode === VIEW_MODE.HALF_DAY) {
             this.options.step = 24 / 2;
-            this.options.column_width = 38;
+            this.options.column_width = this.options.column_width; //38;
         } else if (view_mode === VIEW_MODE.QUARTER_DAY) {
             this.options.step = 24 / 4;
-            this.options.column_width = 38;
+            this.options.column_width = this.options.column_width; //38;
         } else if (view_mode === VIEW_MODE.WEEK) {
             this.options.step = 24 * 7;
-            this.options.column_width = 140;
+            this.options.column_width = this.options.column_width; //140;
         } else if (view_mode === VIEW_MODE.MONTH) {
             this.options.step = 24 * 30;
-            this.options.column_width = 120;
+            this.options.column_width = this.options.column_width;//  120;
         } else if (view_mode === VIEW_MODE.YEAR) {
             this.options.step = 24 * 365;
-            this.options.column_width = 120;
+            this.options.column_width = this.options.column_width;//  120;
         }
     }
 
@@ -343,10 +343,14 @@ export default class Gantt {
             append_to: this.layers.grid
         });
 
-        $.attr(this.$svg, {
-            height: grid_height + this.options.padding + 100,
-            width: '100%'
-        });
+        // $.attr(this.$svg, {
+        //     height: grid_height + this.options.padding + 100,
+        //     width: '100%'
+        // });
+          $.attr(this.$svg, {
+              height: grid_height,//+ this.options.padding + 100,
+              width: grid_width
+          });
     }
 
     make_grid_rows() {
@@ -639,13 +643,15 @@ export default class Gantt {
     }
 
     set_width() {
-        const cur_width = this.$svg.getBoundingClientRect().width;
+        // const cur_width = this.$svg.getBoundingClientRect().width;
         const actual_width = this.$svg
             .querySelector('.grid .grid-row')
             .getAttribute('width');
-        if (cur_width < actual_width) {
-            this.$svg.setAttribute('width', actual_width);
-        }
+        // if (cur_width < actual_width) {
+        //     this.$svg.setAttribute('width', actual_width);
+        // }
+
+        this.$svg.setAttribute('width', actual_width);
     }
 
     set_scroll_position() {
