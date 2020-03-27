@@ -28,16 +28,16 @@ export default class Bar {
         this.corner_radius = this.gantt.options.bar_corner_radius;
 
         if(this.gantt.view_is('Hour')){
-          let hourTaskStartDate = new Date(...date_utils.get_hour_date(this.task._start));
-          let hourTaskEndDate = new Date(...date_utils.get_hour_date(this.task._end));
+          let hourTaskStartDate = this.task._start; //new Date(...date_utils.get_hour_date(this.task._start));
+          let hourTaskEndDate = this.task._end; //new Date(...date_utils.get_hour_date(this.task._end));
 
           // console.log('HourTaskEndDateHours: ', hourTaskEndDate.getHours());
           // console.log('HourTaskEndDateMinutes: ', hourTaskEndDate.getMinutes());
 
 
-          if(hourTaskEndDate.getHours() === 0 && hourTaskEndDate.getMinutes() === 0){
-            hourTaskEndDate = date_utils.add(hourTaskEndDate, '1', 'day');
-          }
+          // if(hourTaskEndDate.getHours() === 0 && hourTaskEndDate.getMinutes() === 0){
+          //   hourTaskEndDate = date_utils.add(hourTaskEndDate, '1', 'day');
+          // }
 
           // console.log(`Bar.js Prepare_Values hourTaskStartDate: \n ${hourTaskStartDate} \n hourTaskEndDate: \n ${hourTaskEndDate}  `);
 
