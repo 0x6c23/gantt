@@ -278,6 +278,21 @@ export default {
         return new Date(...this.get_date_values(date));
     },
 
+    get_hour_date(date) {
+      const vals = this.get_date_values(new Date()).slice(0, 3);
+      var today = new Date(...vals);
+
+      return [
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate(),
+        date.getHours(),
+        date.getMinutes(),
+        date.getSeconds(),
+        date.getMilliseconds()
+      ];
+    },
+
     get_date_values(date) {
         return [
             date.getFullYear(),
@@ -288,18 +303,6 @@ export default {
             date.getSeconds(),
             date.getMilliseconds()
         ];
-    },
-
-    get_hour_date(date) {
-      return [
-        today().getFullYear(),
-        today().getMonth(),
-        today().getDate(),
-        date.getHours(),
-        date.getMinutes(),
-        date.getSeconds(),
-        date.getMilliseconds()
-      ];
     },
 
     get_days_in_month(date) {
