@@ -359,9 +359,9 @@ export default class Bar {
           )
 
           let newHourlyDate = [
-            this.task._start.getFullYear(),
-            this.task._start.getMonth(),
-            this.task._start.getDate(),
+            this.task._end.getFullYear(),
+            this.task._end.getMonth(),
+            this.task._end.getDate(),
             new_end_date.getHours(),
             new_end_date.getMinutes(),
             new_end_date.getSeconds(),
