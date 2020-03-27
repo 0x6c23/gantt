@@ -362,11 +362,10 @@ export default class Bar {
 
             console.log(`Bar.js compute_x hourTaskStartDate: \n ${hourTaskStartDate} \n hourGanttStartDate: \n ${hourGanttStartDate}  `);
 
-          diff = date_utils.diff(hourTaskStartDate, hourGanttStartDate, 'minute') / 60;
+          diff = date_utils.diff(hourGanttStartDate, hourTaskStartDate, 'minute') / 60;
 
-          if(diff < 0) diff * -1;
-          if(typeof diff === "string" && diff.indexOf('-') > -1) diff.replace('-', '');
 
+          console.log(typeof diff);
           console.log('Diff: ', diff);
         } else {
           diff = date_utils.diff(task_start, gantt_start, 'hour');
