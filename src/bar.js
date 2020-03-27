@@ -301,17 +301,6 @@ export default class Bar {
         setTimeout(() => (this.action_completed = false), 1000);
     }
 
-    generate_hourly_date(oldDate, newDate){
-      return [
-        oldDate.getFullYear(),
-        oldDate.getMonth(),
-        oldDate.getDate(),
-        newDate.getHours(),
-        newDate.getMinutes(),
-        newDate.getSeconds(),
-        newDate.getMilliseconds()
-      ]
-    }
 
     compute_start_end_date() {
         const bar = this.$bar;
@@ -333,7 +322,17 @@ export default class Bar {
 
           console.log('New Start Date before: ', new_start_date);
 
-          new_start_date = new Date(...this.gantt.generate_hourly_date(new_start_date, this.task._start))
+          let newHourlyDate = [
+            new_start_date.getFullYear(),
+            new_start_date.getMonth(),
+            new_start_date.getDate(),
+            this.task._start.getHours(),
+            this.task._start.getMinutes(),
+            this.task._start.getSeconds(),
+            this.task._start.getMilliseconds()
+          ];
+
+          new_start_date = new Date(...newHourlyDate)
 
           console.log('New Start Date after: ', new_start_date);
 
