@@ -365,6 +365,7 @@ export default class Bar {
           diff = date_utils.diff(hourTaskStartDate, hourGanttStartDate, 'minute') / 60;
 
           if(diff < 0) diff * -1;
+          if(typeof diff === "string" && diff.indexOf('-') > -1) diff.replace('-', '');
 
           console.log('Diff: ', diff);
         } else {
