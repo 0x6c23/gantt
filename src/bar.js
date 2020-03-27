@@ -357,12 +357,12 @@ export default class Bar {
         let diff;
 
         if(this.gantt.view_is('Hour')){
-          let hourTaskStartDate = task_start; // new Date(...date_utils.get_hour_date(task_start));
-          let hourGanttStartDate = gantt_start;//new Date(...date_utils.get_hour_date(gantt_start));
+          let hourTaskStartDate = new Date(...date_utils.get_hour_date(task_start));
+          let hourGanttStartDate = new Date(...date_utils.get_hour_date(gantt_start));
 
-            console.log(`Bar.js compute_x hourTaskStartDate: \n ${hourTaskStartDate} \n hourGanttStartDate: \n ${hourGanttStartDate}  `);
+          console.log(`Bar.js compute_x hourTaskStartDate: \n ${hourTaskStartDate} \n hourGanttStartDate: \n ${ date_utils.add(hourGanttStartDate, '-1', 'day')}  `);
 
-          diff = date_utils.diff(hourTaskStartDate, hourGanttStartDate, 'minute') / 60;
+          diff = date_utils.diff(hourTaskStartDate,  date_utils.add(hourGanttStartDate, '-1', 'day'), 'minute') / 60;
 
 
           console.log('Diff: ', diff);
