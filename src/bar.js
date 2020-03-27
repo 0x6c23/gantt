@@ -333,7 +333,7 @@ export default class Bar {
 
           console.log('New Start Date before: ', new_start_date);
 
-          new_start_date = new Date(...generate_hourly_date(new_start_date, this.task._start))
+          new_start_date = new Date(...this.gantt.generate_hourly_date(new_start_date, this.task._start))
 
           console.log('New Start Date after: ', new_start_date);
 
