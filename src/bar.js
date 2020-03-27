@@ -364,6 +364,8 @@ export default class Bar {
 
           diff = date_utils.diff(hourTaskStartDate, hourGanttStartDate, 'minute') / 60;
 
+          if(diff < 0) diff * -1;
+
           console.log('Diff: ', diff);
         } else {
           diff = date_utils.diff(task_start, gantt_start, 'hour');
