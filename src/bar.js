@@ -28,8 +28,11 @@ export default class Bar {
         this.corner_radius = this.gantt.options.bar_corner_radius;
 
         if(this.gantt.view_is('Hour')){
+          let hourTaskStartDate = new Date(...date_utils.get_hour_date(this.task._start));
+          let hourTaskEndDate = new Date(...date_utils.get_hour_date(this.task._end));
+
           this.duration =
-              (date_utils.diff(this.task._end, this.task._start, 'minute') / 60) /
+              (date_utils.diff(hourTaskEndDate, hourTaskStartDate, 'minute') / 60) /
               this.gantt.options.step;
         } else {
           this.duration =
@@ -350,7 +353,10 @@ export default class Bar {
         let diff;
 
         if(this.gantt.view_is('Hour')){
-          diff = date_utils.diff(task_start, gantt_start, 'minute') / 60;
+          let hourTaskStartDate = new Date(...date_utils.get_hour_date(task_start));
+          let hourGanttStartDate = new Date(...date_utils.get_hour_date(gantt_start));
+
+          diff = date_utils.diff(hourTaskStartDate, hourGanttStartDate, 'minute') / 60;
         } else {
           diff = date_utils.diff(task_start, gantt_start, 'hour');
         }

@@ -290,6 +290,19 @@ export default {
         ];
     },
 
+    get_hour_date(date) {
+      let today = today();
+      return [
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate(),
+        date.getHours(),
+        date.getMinutes(),
+        date.getSeconds(),
+        date.getMilliseconds()
+      ];
+    },
+
     get_days_in_month(date) {
         const no_of_days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
