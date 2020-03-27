@@ -291,11 +291,10 @@ export default {
     },
 
     get_hour_date(date) {
-      let today = today();
       return [
-        today.getFullYear(),
-        today.getMonth(),
-        today.getDate(),
+        today().getFullYear(),
+        today().getMonth(),
+        today().getDate(),
         date.getHours(),
         date.getMinutes(),
         date.getSeconds(),
