@@ -28,16 +28,16 @@ export default class Bar {
         this.corner_radius = this.gantt.options.bar_corner_radius;
 
         if(this.gantt.view_is('Hour')){
-          let hourTaskStartDate = this.task._start; //new Date(...date_utils.get_hour_date(this.task._start));
-          let hourTaskEndDate = this.task._end; //new Date(...date_utils.get_hour_date(this.task._end));
+          let hourTaskStartDate = new Date(...date_utils.get_hour_date(this.task._start));
+          let hourTaskEndDate = new Date(...date_utils.get_hour_date(this.task._end));
 
           // console.log('HourTaskEndDateHours: ', hourTaskEndDate.getHours());
           // console.log('HourTaskEndDateMinutes: ', hourTaskEndDate.getMinutes());
 
 
-          // if(hourTaskEndDate.getHours() === 0 && hourTaskEndDate.getMinutes() === 0){
-          //   hourTaskEndDate = date_utils.add(hourTaskEndDate, '1', 'day');
-          // }
+          if(hourTaskEndDate.getHours() === 0 && hourTaskEndDate.getMinutes() === 0){
+            hourTaskEndDate = date_utils.add(hourTaskEndDate, '1', 'day');
+          }
 
           // console.log(`Bar.js Prepare_Values hourTaskStartDate: \n ${hourTaskStartDate} \n hourTaskEndDate: \n ${hourTaskEndDate}  `);
 
@@ -301,6 +301,18 @@ export default class Bar {
         setTimeout(() => (this.action_completed = false), 1000);
     }
 
+    generate_hourly_date(oldDate, newDate){
+      return [
+        oldDate.getFullYear(),
+        oldDate.getMonth(),
+        oldDate.getDate(),
+        newDate.getHours(),
+        newDate.getMinutes(),
+        newDate.getSeconds(),
+        newDate.getMilliseconds()
+      ]
+    }
+
     compute_start_end_date() {
         const bar = this.$bar;
         const x_in_units = bar.getX() / this.gantt.options.column_width;
@@ -308,11 +320,24 @@ export default class Bar {
         let new_start_date;
 
         if(this.gantt.view_is('Hour')){
+
+          console.log('Computing new Start Date for Hourly View');
+          console.log('Task Start: ', this.task._start);
+          console.log('Task End: ', this.task._end);
+
           new_start_date = date_utils.add(
               this.gantt.gantt_start,
               (x_in_units * this.gantt.options.step) * 60,
               'minute'
           )
+
+          console.log('New Start Date before: ', new_start_date);
+
+          new_start_date = new Date(...generate_hourly_date(new_start_date, this.task._start))
+
+          console.log('New Start Date after: ', new_start_date);
+
+
         } else {
           new_start_date = date_utils.add(
               this.gantt.gantt_start,
