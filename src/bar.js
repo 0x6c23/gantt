@@ -320,7 +320,6 @@ export default class Bar {
               'minute'
           )
 
-          console.log('New Start Date before: ', new_start_date);
 
           let newHourlyDate = [
             this.task._start.getFullYear(),
@@ -334,7 +333,6 @@ export default class Bar {
 
           new_start_date = new Date(...newHourlyDate)
 
-          console.log('New Start Date after: ', new_start_date);
 
 
         } else {
@@ -359,6 +357,18 @@ export default class Bar {
               (width_in_units * this.gantt.options.step) * 60,
               'minute'
           )
+
+          let newHourlyDate = [
+            this.task._start.getFullYear(),
+            this.task._start.getMonth(),
+            this.task._start.getDate(),
+            new_end_date.getHours(),
+            new_end_date.getMinutes(),
+            new_end_date.getSeconds(),
+            new_end_date.getMilliseconds()
+          ];
+
+          new_end_date = new Date(...newHourlyDate)
         } else {
           new_end_date = date_utils.add(
               new_start_date,
