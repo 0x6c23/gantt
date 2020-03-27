@@ -31,9 +31,13 @@ export default class Bar {
           let hourTaskStartDate = new Date(...date_utils.get_hour_date(this.task._start));
           let hourTaskEndDate = new Date(...date_utils.get_hour_date(this.task._end));
 
+          console.log(`Bar.js Prepare_Values hourTaskStartDate: \n ${hourTaskStartDate} \n hourTaskEndDate: \n ${hourTaskEndDate}  `);
+
           this.duration =
               (date_utils.diff(hourTaskEndDate, hourTaskStartDate, 'minute') / 60) /
               this.gantt.options.step;
+
+          console.log('Duration: ', this.duration);
         } else {
           this.duration =
               date_utils.diff(this.task._end, this.task._start, 'hour') /
@@ -356,7 +360,11 @@ export default class Bar {
           let hourTaskStartDate = new Date(...date_utils.get_hour_date(task_start));
           let hourGanttStartDate = new Date(...date_utils.get_hour_date(gantt_start));
 
+            console.log(`Bar.js compute_x hourTaskStartDate: \n ${hourTaskStartDate} \n hourGanttStartDate: \n ${hourGanttStartDate}  `);
+
           diff = date_utils.diff(hourTaskStartDate, hourGanttStartDate, 'minute') / 60;
+
+          console.log('Diff: ', diff);
         } else {
           diff = date_utils.diff(task_start, gantt_start, 'hour');
         }
