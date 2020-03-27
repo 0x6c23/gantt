@@ -219,7 +219,7 @@ export default class Bar {
     show_popup() {
         if (this.gantt.bar_being_dragged) return;
 
-        if(this.gannt.options.disable_popup) return;
+        if(this.gantt.options.disable_popup) return;
 
         const start_date = date_utils.format(this.task._start, 'MMM D', this.gantt.options.language);
         const end_date = date_utils.format(
