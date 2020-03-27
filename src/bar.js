@@ -323,13 +323,13 @@ export default class Bar {
           console.log('New Start Date before: ', new_start_date);
 
           let newHourlyDate = [
-            new_start_date.getFullYear(),
-            new_start_date.getMonth(),
-            new_start_date.getDate(),
-            this.task._start.getHours(),
-            this.task._start.getMinutes(),
-            this.task._start.getSeconds(),
-            this.task._start.getMilliseconds()
+            this.task._start.getFullYear(),
+            this.task._start.getMonth(),
+            this.task._start.getDate(),
+            new_start_date.getHours(),
+            new_start_date.getMinutes(),
+            new_start_date.getSeconds(),
+            new_start_date.getMilliseconds()
           ];
 
           new_start_date = new Date(...newHourlyDate)
