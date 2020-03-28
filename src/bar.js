@@ -336,11 +336,27 @@ export default class Bar {
 
 
         } else {
+          // keep old hours/minutes/seconds
+          // and only change day/ month/ year
+
+
           new_start_date = date_utils.add(
               this.gantt.gantt_start,
               x_in_units * this.gantt.options.step,
               'hour'
           )
+
+          let newHourlyDate = [
+            new_start_date.getFullYear(),
+            new_start_date.getMonth(),
+            new_start_date.getDate(),
+            this.task._start.getHours(),
+            this.task._start.getMinutes(),
+            this.task._start.getSeconds(),
+            this.task._start.getMilliseconds()
+          ];
+
+            new_start_date = new Date(...newHourlyDate)
         }
 
 
@@ -369,12 +385,27 @@ export default class Bar {
           ];
 
           new_end_date = new Date(...newHourlyDate)
+
         } else {
+
           new_end_date = date_utils.add(
               new_start_date,
               width_in_units * this.gantt.options.step,
               'hour'
           );
+
+          let newHourlyDate = [
+            new_end_date.getFullYear(),
+            new_end_date.getMonth(),
+            new_end_date.getDate(),
+            this.task._end.getHours(),
+            this.task._end.getMinutes(),
+            this.task._end.getSeconds(),
+            this.task._end.getMilliseconds()
+          ];
+
+          new_end_date = new Date(...newHourlyDate)
+
         }
 
         console.log(` NEW END DATE: ${new_end_date}`);
