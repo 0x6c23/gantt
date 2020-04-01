@@ -373,7 +373,7 @@ export default class Bar {
           )
 
           if(new_end_date.getHours() === 0){
-            this.task._end = date_utils.add(this.task._end, 1, day);
+            this.task._end = date_utils.add(this.task._end, '1', 'day');
           }
 
           let newHourlyDate = [
