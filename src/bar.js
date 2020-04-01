@@ -372,7 +372,7 @@ export default class Bar {
               'minute'
           )
 
-          if(new_end_date.getHours() === 0){
+          if(new_end_date.getHours() === 0 && this.tast._end.getDate() == this.task._start.getDate()){
             this.task._end = date_utils.add(this.task._end, '1', 'day');
           }
 
