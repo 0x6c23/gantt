@@ -333,8 +333,6 @@ export default class Bar {
 
           new_start_date = new Date(...newHourlyDate)
 
-
-
         } else {
           // keep old hours/minutes/seconds
           // and only change day/ month/ year
@@ -373,6 +371,10 @@ export default class Bar {
               (width_in_units * this.gantt.options.step) * 60,
               'minute'
           )
+
+          if(new_end_date.getHours() === 0){
+            this.task._end = date_utils.add(this.task._end, 1, day);
+          }
 
           let newHourlyDate = [
             this.task._end.getFullYear(),
