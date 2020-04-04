@@ -133,6 +133,14 @@ export default class Bar {
     }
 
     draw_label() {
+      var label = this.task.name;
+
+      if(this.gantt.view_is('Hour')){
+        label = label + " " + this.task._start.getHours() + "-" + this.task._end.getHours();
+      }
+
+
+
         createSVG('text', {
             x: this.x + this.width / 2,
             y: this.y + this.height / 2,
