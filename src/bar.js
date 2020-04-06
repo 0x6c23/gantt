@@ -292,7 +292,7 @@ export default class Bar {
           this.$bar_label.innerHTML = this.get_label();
 
           this.task.startDayTime = new_start_date;
-          this.tast.endDayTime = new_end_date;
+          this.task.endDayTime = new_end_date;
 
           this.gantt.trigger_event('date_change', [
               this.task,
@@ -347,8 +347,10 @@ export default class Bar {
         let new_start_date;
 
         if(this.gantt.view_is('Hour')){
+          let hourTaskStartDate = new Date(...date_utils.get_hour_date(this.gantt.gantt_start, '00:00'));
+
           new_start_date = date_utils.add(
-              this.gantt.gantt_start,
+              hourTaskStartDate,
               (x_in_units * this.gantt.options.step) * 60,
               'minute'
           )
