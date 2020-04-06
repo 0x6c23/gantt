@@ -102,8 +102,13 @@ export default class Gantt {
             task.start = task.start.substring(0, 16).replace('T',' ');
             task.end = task.end.substring(0, 16).replace('T',' ');
 
+
             task._start = date_utils.parse(task.start);
             task._end = date_utils.parse(task.end);
+
+            task._start = new Date(...date_utils.get_date_values(task._start));
+            task._end = new Date(...date_utils.get_date_values(task._end));
+
 
             // make task invalid if duration too large
             if (date_utils.diff(task._end, task._start, 'year') > 10) {
