@@ -399,8 +399,10 @@ export default class Bar {
         let new_end_date;
 
         if(this.gantt.view_is('Hour')){
+          let hourTaskStartDate = new Date(...date_utils.get_hour_date(this.gantt.gantt_start, new_start_date));
+
           new_end_date = date_utils.add(
-              new_start_date,
+              hourTaskStartDate,
               (width_in_units * this.gantt.options.step) * 60,
               'minute'
           )
