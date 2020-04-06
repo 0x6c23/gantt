@@ -28,8 +28,9 @@ export default class Bar {
         this.corner_radius = this.gantt.options.bar_corner_radius;
 
         if(this.gantt.view_is('Hour')){
-          let hourTaskStartDate = new Date(...date_utils.get_hour_date(this.task._start));
-          let hourTaskEndDate = new Date(...date_utils.get_hour_date(this.task._end));
+
+          let hourTaskStartDate = new Date(...date_utils.get_hour_date(this.task._start, this.task.startDayTime));
+          let hourTaskEndDate = new Date(...date_utils.get_hour_date(this.task._end, this.task.endDayTime));
 
           // console.log('HourTaskEndDateHours: ', hourTaskEndDate.getHours());
           // console.log('HourTaskEndDateMinutes: ', hourTaskEndDate.getMinutes());
@@ -47,17 +48,21 @@ export default class Bar {
 
           // console.log('Duration: ', this.duration);
         } else {
+
           this.duration =
               date_utils.diff(this.task._end, this.task._start, 'hour') /
               this.gantt.options.step;
+
         }
 
 
         this.width = this.gantt.options.column_width * this.duration;
+
         this.progress_width =
             this.gantt.options.column_width *
                 this.duration *
                 (this.task.progress / 100) || 0;
+
         this.group = createSVG('g', {
             class: 'bar-wrapper ' + (this.task.custom_class || ''),
             'data-id': this.task.id
@@ -132,21 +137,27 @@ export default class Bar {
         animateSVG(this.$bar_progress, 'width', 0, this.progress_width);
     }
 
-    draw_label() {
-      var label = this.task.name;
-
-      console.log('Drawing label.. Current view is: ',  this.gantt.options.view_mode);
+    get_label() {
+      var label = this.task.name + " ";
 
       if(this.gantt.view_is('Hour')){
-        label = label + " " + this.task._start.getHours() + "-" + this.task._end.getHours();
+
+        // label = label + ("0" + this.task._start.getHours()).slice(-2) + ':' + this.task._start.getMinutes() + " - " + ("0" + this.task._end.getHours()).slice(-2) + ":" + this.task._end.getMinutes();
+        label = this.task.startDayTime + " - " + this.task.endDayTime;
+
+      } else if(this.gantt.view_is("Day")){
+
+        label = label + this.task._start.getDate() + ". - " + this.task._end.getDate() + ".";
+
       }
+      return label;
+    }
 
-
-
-        createSVG('text', {
+    draw_label() {
+      this.$bar_label = createSVG('text', {
             x: this.x + this.width / 2,
             y: this.y + this.height / 2,
-            innerHTML: label,
+            innerHTML: this.get_label(),
             class: 'bar-label',
             append_to: this.bar_group
         });
@@ -277,6 +288,21 @@ export default class Bar {
         let changed = false;
         const { new_start_date, new_end_date } = this.compute_start_end_date();
 
+        if(this.gantt.view_is('Hour')){
+          this.$bar_label.innerHTML = this.get_label();
+
+          this.task.startDayTime = new_start_date;
+          this.tast.endDayTime = new_end_date;
+
+          this.gantt.trigger_event('date_change', [
+              this.task,
+              new_start_date,
+              new_end_date
+          ]);
+
+          return;
+        }
+
         if (Number(this.task._start) !== Number(new_start_date)) {
             changed = true;
             this.task._start = new_start_date;
@@ -289,9 +315,11 @@ export default class Bar {
 
         if (!changed) return;
 
+        this.$bar_label.innerHTML = this.get_label();
+
         var secondsToAdd = 0;
 
-        if(!this.gantt.view_is('Hour')) secondsToAdd = -1;
+        // if(!this.gantt.view_is('Hour')) secondsToAdd = -1;
 
         this.gantt.trigger_event('date_change', [
             this.task,
@@ -319,29 +347,24 @@ export default class Bar {
         let new_start_date;
 
         if(this.gantt.view_is('Hour')){
-
-          console.log('Computing new Start Date for Hourly View');
-          console.log('Task Start: ', this.task._start);
-          console.log('Task End: ', this.task._end);
-
           new_start_date = date_utils.add(
               this.gantt.gantt_start,
               (x_in_units * this.gantt.options.step) * 60,
               'minute'
           )
+          //
+          // let newHourlyDate = [
+          //   today.getFullYear(),
+          //   today.getMonth(),
+          //   today.getDate(),
+          //   new_start_date.getHours(),
+          //   new_start_date.getMinutes(),
+          //   new_start_date.getSeconds(),
+          //   new_start_date.getMilliseconds()
+          // ];
 
 
-          let newHourlyDate = [
-            this.task._start.getFullYear(),
-            this.task._start.getMonth(),
-            this.task._start.getDate(),
-            new_start_date.getHours(),
-            new_start_date.getMinutes(),
-            new_start_date.getSeconds(),
-            new_start_date.getMilliseconds()
-          ];
-
-          new_start_date = new Date(...newHourlyDate)
+          new_start_date =  ("0" + new_start_date.getHours()).slice(-2) + ':' + ("0" + new_start_date.getMinutes()).slice(-2); //new Date(...newHourlyDate)
 
         } else {
           // keep old hours/minutes/seconds
@@ -353,24 +376,24 @@ export default class Bar {
               x_in_units * this.gantt.options.step,
               'hour'
           )
-
-          let newHourlyDate = [
-            new_start_date.getFullYear(),
-            new_start_date.getMonth(),
-            new_start_date.getDate(),
-            this.task._start.getHours(),
-            this.task._start.getMinutes(),
-            this.task._start.getSeconds(),
-            this.task._start.getMilliseconds()
-          ];
-
-            new_start_date = new Date(...newHourlyDate)
+          //
+          // let newHourlyDate = [
+          //   new_start_date.getFullYear(),
+          //   new_start_date.getMonth(),
+          //   new_start_date.getDate(),
+          //   this.task._start.getHours(),
+          //   this.task._start.getMinutes(),
+          //   this.task._start.getSeconds(),
+          //   this.task._start.getMilliseconds()
+          // ];
+          //
+          //   new_start_date = new Date(...newHourlyDate)
         }
 
 
         const width_in_units = bar.getWidth() / this.gantt.options.column_width;
 
-        console.log( '--- COMPUTE START/END DATE ---');
+        // console.log( '--- COMPUTE START/END DATE ---');
         console.log(` NEW START DATE: ${new_start_date}`);
 
         let new_end_date;
@@ -382,21 +405,24 @@ export default class Bar {
               'minute'
           )
 
-          if(new_end_date.getHours() === 0 && this.task._end.getDate() == this.task._start.getDate()){
-            this.task._end = date_utils.add(this.task._end, '1', 'day');
-          }
+          // if(new_end_date.getHours() === 0 && this.task._end.getDate() == this.task._start.getDate()){
+          //   this.task._end = date_utils.add(this.task._end, '1', 'day');
+          // }
+          //
+          // let newHourlyDate = [
+          //   this.task._end.getFullYear(),
+          //   this.task._end.getMonth(),
+          //   this.task._end.getDate(),
+          //   new_end_date.getHours(),
+          //   new_end_date.getMinutes(),
+          //   new_end_date.getSeconds(),
+          //   new_end_date.getMilliseconds()
+          // ];
 
-          let newHourlyDate = [
-            this.task._end.getFullYear(),
-            this.task._end.getMonth(),
-            this.task._end.getDate(),
-            new_end_date.getHours(),
-            new_end_date.getMinutes(),
-            new_end_date.getSeconds(),
-            new_end_date.getMilliseconds()
-          ];
-
-          new_end_date = new Date(...newHourlyDate)
+          // new_end_date = new Date(...newHourlyDate)
+          //
+          new_end_date =  ("0" + new_end_date.getHours()).slice(-2) + ':' + ("0" + new_end_date.getMinutes()).slice(-2); //new Date(...newHourlyDate)
+          //
 
         } else {
 
@@ -405,18 +431,18 @@ export default class Bar {
               width_in_units * this.gantt.options.step,
               'hour'
           );
-
-          let newHourlyDate = [
-            new_end_date.getFullYear(),
-            new_end_date.getMonth(),
-            new_end_date.getDate(),
-            this.task._end.getHours(),
-            this.task._end.getMinutes(),
-            this.task._end.getSeconds(),
-            this.task._end.getMilliseconds()
-          ];
-
-          new_end_date = new Date(...newHourlyDate)
+          //
+          // let newHourlyDate = [
+          //   new_end_date.getFullYear(),
+          //   new_end_date.getMonth(),
+          //   new_end_date.getDate(),
+          //   this.task._end.getHours(),
+          //   this.task._end.getMinutes(),
+          //   this.task._end.getSeconds(),
+          //   this.task._end.getMilliseconds()
+          // ];
+          //
+          // new_end_date = new Date(...newHourlyDate)
 
         }
 
@@ -440,8 +466,8 @@ export default class Bar {
         let diff;
 
         if(this.gantt.view_is('Hour')){
-          let hourTaskStartDate = new Date(...date_utils.get_hour_date(task_start));
-          let hourGanttStartDate = new Date(...date_utils.get_hour_date(gantt_start));
+          let hourTaskStartDate = new Date(...date_utils.get_hour_date(task_start, this.task.startDayTime));
+          let hourGanttStartDate = new Date(...date_utils.get_hour_date(gantt_start, null));
 
           console.log(`Bar.js compute_x hourTaskStartDate: \n ${hourTaskStartDate} \n hourGanttStartDate: \n ${ date_utils.add(hourGanttStartDate, '-1', 'day')}  `);
 

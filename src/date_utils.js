@@ -278,7 +278,7 @@ export default {
         return new Date(...this.get_date_values(date));
     },
 
-    get_hour_date(date) {
+    get_hour_date(date, dayTime) {
       const vals = this.get_date_values(new Date()).slice(0, 3);
       var today = new Date(...vals);
 
@@ -286,10 +286,8 @@ export default {
         today.getFullYear(),
         today.getMonth(),
         today.getDate(),
-        date.getHours(),
-        date.getMinutes(),
-        date.getSeconds(),
-        date.getMilliseconds()
+        dayTime !== null ? dayTime.split(':')[0] : date.getHours(),
+        dayTime !== null ? dayTime.split(':')[1] : date.getMinutes()
       ];
     },
 
