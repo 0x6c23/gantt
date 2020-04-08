@@ -102,31 +102,33 @@ export default class Gantt {
             // task.start = task.start.substring(0, 16).replace('T',' ');
             // task.end = task.end.substring(0, 16).replace('T',' ');
 
-            // let startDateArray = tast.start.split('-');
-            // let endDateArray = tast.end.split('-');
+            let startDateArray = tast.start.split('-');
+            let endDateArray = tast.end.split('-');
             //
-            // let startTime = new Date(
-            //   startDateArray[0].split('-')[0],
-            //   startDateArray[0].split('-')[1].replace('0', '') - 1,
-            //   startDateArray[0].split('-')[2].replace('0', '')
-            //   // startDateArray[1].split(':')[0],
-            //   // startDateArray[1].split(':')[1]
-            // );
+            let startTime = new Date(
+              startDateArray[0].split('-')[0],
+              startDateArray[0].split('-')[1].replace('0', '') - 1,
+              startDateArray[0].split('-')[2].replace('0', '')
+              // startDateArray[1].split(':')[0],
+              // startDateArray[1].split(':')[1]
+            );
+
+            let endTime = new Date(
+              endDateArray[0].split('-')[0],
+              endDateArray[0].split('-')[1].replace('0', '') - 1,
+              endDateArray[0].split('-')[2].replace('0', ''),
+              // endDateArray[1].split(':')[0],
+              // endDateArray[1].split(':')[1]
+            );
+
+            task._start = startTime;
+            task._end = endTime;
             //
-            // let endTime = new Date(
-            //   endDateArray[0].split('-')[0],
-            //   endDateArray[0].split('-')[1].replace('0', '') - 1,
-            //   endDateArray[0].split('-')[2].replace('0', ''),
-            //   // endDateArray[1].split(':')[0],
-            //   // endDateArray[1].split(':')[1]
-            // );
-            //
-            // task._start = startTime;
-            // task._end = endTime;
             //
             //
-            task._start = date_utils.parse(task.start);
-            task._end = date_utils.parse(task.end);
+            //
+            // task._start = date_utils.parse(task.start);
+            // task._end = date_utils.parse(task.end);
 
 
             // make task invalid if duration too large
