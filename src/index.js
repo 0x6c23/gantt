@@ -108,7 +108,10 @@ export default class Gantt {
             let startTime = new Date(
               startDateArray[0],
               startDateArray[1].replace('0', '') - 1,
-              startDateArray[2].replace('0', '')
+              startDateArray[2].replace('0', ''),
+              0,
+              0,
+              0
               // startDateArray[1].split(':')[0],
               // startDateArray[1].split(':')[1]
             );
@@ -117,6 +120,9 @@ export default class Gantt {
               endDateArray[0],
               endDateArray[1].replace('0', '') - 1,
               endDateArray[2].replace('0', ''),
+              0,
+              0,
+              0
               // endDateArray[1].split(':')[0],
               // endDateArray[1].split(':')[1]
             );
@@ -183,8 +189,13 @@ export default class Gantt {
                 task.id = generate_id(task);
             }
 
+            console.log('Setting up task... starttime: ', task._start);
+
             return task;
         });
+
+
+
 
         this.setup_dependencies();
     }
