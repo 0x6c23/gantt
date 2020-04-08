@@ -346,6 +346,9 @@ export default class Bar {
 
         let new_start_date;
 
+        console.log('GetX: ', bar.getX());
+        console.log('X in units: ', x_in_units);
+
         if(this.gantt.view_is('Hour')){
           let hourTaskStartDate = new Date(...date_utils.get_hour_date(this.gantt.gantt_start, '00:00'));
 
@@ -373,11 +376,17 @@ export default class Bar {
           // and only change day/ month/ year
 
 
+          console.log('Gantt Start: ', this.gantt.gantt_start);
+          console.log(`Adding (${x_in_units} times ${this.gantt.options.step}) hours`);
+
           new_start_date = date_utils.add(
               this.gantt.gantt_start,
               x_in_units * this.gantt.options.step,
               'hour'
           )
+
+          console.log('Result: ', new_start_date);
+
           //
           // let newHourlyDate = [
           //   new_start_date.getFullYear(),
