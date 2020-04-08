@@ -259,7 +259,9 @@ export default class Gantt {
         this.gantt_end = date_utils.start_of(this.gantt_end, 'day');
         this.current_day =  date_utils.start_of(date_utils.parse(this.options.current_day), 'day');
 
-        console.log('### This Gantt Start: ', this.current_day);
+        console.log('### This Current Day: ', this.current_day);
+        console.log('### This Gantt Start: ', this.gantt_start);
+
         console.log('### This Gantt End: ', this.gantt_end);
 
 

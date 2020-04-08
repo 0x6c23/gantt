@@ -351,7 +351,7 @@ export default class Bar {
 
           new_start_date = date_utils.add(
               hourTaskStartDate,
-              (x_in_units * this.gantt.options.step) * 60,
+              ((x_in_units - 1) * this.gantt.options.step) * 60,
               'minute'
           )
           //
