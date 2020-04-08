@@ -106,17 +106,17 @@ export default class Gantt {
             let endDateArray = task.end.split('-');
             //
             let startTime = new Date(
-              startDateArray[0].split('-')[0],
-              startDateArray[0].split('-')[1].replace('0', '') - 1,
-              startDateArray[0].split('-')[2].replace('0', '')
+              startDateArray[0],
+              startDateArray[1].replace('0', '') - 1,
+              startDateArray[2].replace('0', '')
               // startDateArray[1].split(':')[0],
               // startDateArray[1].split(':')[1]
             );
 
             let endTime = new Date(
-              endDateArray[0].split('-')[0],
-              endDateArray[0].split('-')[1].replace('0', '') - 1,
-              endDateArray[0].split('-')[2].replace('0', ''),
+              endDateArray[0],
+              endDateArray[1].replace('0', '') - 1,
+              endDateArray[2].replace('0', ''),
               // endDateArray[1].split(':')[0],
               // endDateArray[1].split(':')[1]
             );
