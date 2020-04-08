@@ -373,10 +373,6 @@ export default class Bar {
           new_start_date =  ("0" + new_start_date.getHours()).slice(-2) + ':' + ("0" + new_start_date.getMinutes()).slice(-2); //new Date(...newHourlyDate)
 
         } else {
-          // keep old hours/minutes/seconds
-          // and only change day/ month/ year
-
-
           console.log('Gantt Start: ', this.gantt.gantt_start);
           console.log(`Adding (${x_in_units} times ${this.gantt.options.step}) hours`);
 
@@ -386,20 +382,18 @@ export default class Bar {
               'hour'
           )
 
-          console.log('Result: ', new_start_date);
 
           //
-          // let newHourlyDate = [
-          //   new_start_date.getFullYear(),
-          //   new_start_date.getMonth(),
-          //   new_start_date.getDate(),
-          //   this.task._start.getHours(),
-          //   this.task._start.getMinutes(),
-          //   this.task._start.getSeconds(),
-          //   this.task._start.getMilliseconds()
-          // ];
-          //
-          //   new_start_date = new Date(...newHourlyDate)
+          let newHourlyDate = [
+            new_start_date.getFullYear(),
+            new_start_date.getMonth(),
+            new_start_date.getDate(),
+            0,
+            0,
+            0
+          ];
+
+            new_start_date = new Date(...newHourlyDate)
         }
 
 
