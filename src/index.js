@@ -259,7 +259,7 @@ export default class Gantt {
         this.gantt_end = date_utils.start_of(this.gantt_end, 'day');
         this.current_day =  date_utils.start_of(date_utils.parse(this.options.current_day), 'day');
 
-        console.log('### This Gantt Start: ', this.gantt_start);
+        console.log('### This Gantt Start: ', this.current_day);
         console.log('### This Gantt End: ', this.gantt_end);
 
 
@@ -267,7 +267,7 @@ export default class Gantt {
         // add date padding on both sides
         if (this.view_is(VIEW_MODE.HOUR)) {
             this.gantt_start = this.current_day; //date_utils.add(date_utils.start_of(this.current_day, 'day'), -30, 'minute'); // this.gantt_start; // date_utils.add(this.gantt_start, -1, 'day');
-            this.gantt_end   = date_utils.add(this.current_day, 24, 'hour'); //date_utils.add(date_utils.start_of(this.current_day, 'day'), 24, 'hour'); // this.gantt_end === this.gantt_start ? date_utils.add(this.gantt_end, 1, 'day') : this.gantt_end; // date_utils.add(this.gantt_end, 1, 'day');
+            this.gantt_end   = date_utils.add(this.current_day, 23, 'hour'); //date_utils.add(date_utils.start_of(this.current_day, 'day'), 24, 'hour'); // this.gantt_end === this.gantt_start ? date_utils.add(this.gantt_end, 1, 'day') : this.gantt_end; // date_utils.add(this.gantt_end, 1, 'day');
         } else if (this.view_is([VIEW_MODE.QUARTER_DAY, VIEW_MODE.HALF_DAY])) {
             this.gantt_start =  date_utils.add(this.gantt_start, -7, 'day');
             this.gantt_end   =  date_utils.add(this.gantt_end, 7, 'day');
