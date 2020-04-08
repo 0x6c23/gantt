@@ -347,6 +347,7 @@ export default class Bar {
         let new_start_date;
 
         console.log('GetX: ', bar.getX());
+        console.log('Column Width: ', this.gantt.options.column_width);
         console.log('X in units: ', x_in_units);
 
         if(this.gantt.view_is('Hour')){
@@ -489,11 +490,16 @@ export default class Bar {
 
           console.log('Diff: ', diff);
         } else {
+          console.log('Computing x... Task start: ', this.task._start);
+          console.log('Gantt start: ', this.gantt.gantt_start);
           diff = date_utils.diff(task_start, gantt_start, 'hour');
+          console.log('Difference in hours: ', diff);
         }
 
 
         let x = diff / step * column_width;
+
+        console.log(`X = ${diff} / ${step} * ${column_width} = ${x}`);
 
         if (this.gantt.view_is('Month')) {
             const diff = date_utils.diff(task_start, gantt_start, 'day');
