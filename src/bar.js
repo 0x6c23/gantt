@@ -406,6 +406,8 @@ export default class Bar {
         const width_in_units = bar.getWidth() / this.gantt.options.column_width;
 
         // console.log( '--- COMPUTE START/END DATE ---');
+        //
+        console.log('OLD START DATE: ', this.task._start);
         console.log(` NEW START DATE: ${new_start_date}`);
 
         let new_end_date;
