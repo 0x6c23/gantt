@@ -142,10 +142,20 @@ export default class Bar {
 
       if(this.gantt.view_is('Hour')){
         // label = label + ("0" + this.task._start.getHours()).slice(-2) + ':' + this.task._start.getMinutes() + " - " + ("0" + this.task._end.getHours()).slice(-2) + ":" + this.task._end.getMinutes();
-        label = this.task.startDayTime + " - " + this.task.endDayTime;
+        label = label + this.task.startDayTime + " - " + this.task.endDayTime;
+      } else if(this.gantt.view_is('Year')) {
+        label = label + `
+        ${this.task._start.getDate()}.
+        ${this.task._start.getMonth()+1}.
+        ${this.task._start..getYear()} bis
+        ${this.task._end.getDate()}.
+        ${this.task._end.getMonth()}.
+        ${this.task._end..getYear()}
+        `
       } else {
-        label = label + `${this.task._start.getDate()}.${this.task._start.getMonth()} bis ${this.task._end.getDate()}.${this.task._end.getMonth()}`
+        label = label + `${this.task._start.getDate()}.${this.task._start.getMonth()+1} bis ${this.task._end.getDate()}.${this.task._end.getMonth()}`
       }
+
       return label;
     }
 
