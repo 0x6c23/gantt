@@ -150,7 +150,7 @@ export default class Bar {
         ${this.task._start.getYear()} bis
         ${this.task._end.getDate()}.
         ${this.task._end.getMonth()}.
-        ${this.task._end..getYear()}
+        ${this.task._end.getYear()}
         `;
       } else {
         label = label + `${this.task._start.getDate()}.${this.task._start.getMonth()+1} bis ${this.task._end.getDate()}.${this.task._end.getMonth()}`
