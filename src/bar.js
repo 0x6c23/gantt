@@ -342,7 +342,13 @@ export default class Bar {
 
     compute_start_end_date() {
         const bar = this.$bar;
-        const x_in_units = Math.round(bar.getX() / this.gantt.options.column_width);
+        var x_in_units;
+
+        if(this.gantt.view_is('Day')){
+          x_in_units = Math.round(bar.getX() / this.gantt.options.column_width);
+        } else {
+          x_in_units = bar.getX() / this.gantt.options.column_width;
+        }
 
         let new_start_date;
 
