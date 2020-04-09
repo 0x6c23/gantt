@@ -141,14 +141,10 @@ export default class Bar {
       var label = this.task.name + " ";
 
       if(this.gantt.view_is('Hour')){
-
         // label = label + ("0" + this.task._start.getHours()).slice(-2) + ':' + this.task._start.getMinutes() + " - " + ("0" + this.task._end.getHours()).slice(-2) + ":" + this.task._end.getMinutes();
         label = this.task.startDayTime + " - " + this.task.endDayTime;
-
-      } else if(this.gantt.view_is("Day")){
-
-        label = label + this.task._start.getDate() + ". - " + this.task._end.getDate() + ".";
-
+      } else {
+        label = label + `${this.task._start.getDate()}.${this.task._start.getMonth()} bis ${this.task._end.getDate()}.${this.task._end.getMonth()}`
       }
       return label;
     }
@@ -289,10 +285,10 @@ export default class Bar {
         const { new_start_date, new_end_date } = this.compute_start_end_date();
 
         if(this.gantt.view_is('Hour')){
-          this.$bar_label.innerHTML = this.get_label();
-
           this.task.startDayTime = new_start_date;
           this.task.endDayTime = new_end_date;
+
+          this.$bar_label.innerHTML = this.get_label();
 
           this.gantt.trigger_event('date_change', [
               this.task,
