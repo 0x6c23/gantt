@@ -48,13 +48,10 @@ export default class Bar {
 
           // console.log('Duration: ', this.duration);
         } else {
-
           this.duration =
               date_utils.diff(this.task._end, this.task._start, 'hour') /
               this.gantt.options.step;
-
         }
-
 
         this.width = this.gantt.options.column_width * this.duration;
 
@@ -62,6 +59,12 @@ export default class Bar {
             this.gantt.options.column_width *
                 this.duration *
                 (this.task.progress / 100) || 0;
+
+        if(this.gantt.view_is('Day')){
+          // Subtract one column width to include the last day it ends on
+          this.width          -= this.gantt.options.column_width;
+          this.progress_width -= this.gantt.options.column_width;
+        }
 
         this.group = createSVG('g', {
             class: 'bar-wrapper ' + (this.task.custom_class || ''),
@@ -358,10 +361,6 @@ export default class Bar {
 
         let new_start_date;
 
-        console.log('GetX: ', bar.getX());
-        console.log('Column Width: ', this.gantt.options.column_width);
-        console.log('X in units: ', x_in_units);
-
         if(this.gantt.view_is('Hour')){
           let hourTaskStartDate = new Date(...date_utils.get_hour_date(this.gantt.gantt_start, '00:00'));
 
@@ -370,32 +369,16 @@ export default class Bar {
               ((x_in_units - 1) * this.gantt.options.step) * 60,
               'minute'
           )
-          //
-          // let newHourlyDate = [
-          //   today.getFullYear(),
-          //   today.getMonth(),
-          //   today.getDate(),
-          //   new_start_date.getHours(),
-          //   new_start_date.getMinutes(),
-          //   new_start_date.getSeconds(),
-          //   new_start_date.getMilliseconds()
-          // ];
-
 
           new_start_date =  ("0" + new_start_date.getHours()).slice(-2) + ':' + ("0" + new_start_date.getMinutes()).slice(-2); //new Date(...newHourlyDate)
 
         } else {
-          console.log('Gantt Start: ', this.gantt.gantt_start);
-          console.log(`Adding (${x_in_units} times ${this.gantt.options.step}) hours`);
-
           new_start_date = date_utils.add(
               this.gantt.gantt_start,
               x_in_units * this.gantt.options.step,
               'hour'
           )
 
-
-          //
           let newHourlyDate = [
             new_start_date.getFullYear(),
             new_start_date.getMonth(),
@@ -411,11 +394,6 @@ export default class Bar {
 
         const width_in_units = bar.getWidth() / this.gantt.options.column_width;
 
-        // console.log( '--- COMPUTE START/END DATE ---');
-        //
-        console.log('OLD START DATE: ', this.task._start);
-        console.log(` NEW START DATE: ${new_start_date}`);
-
         let new_end_date;
 
         if(this.gantt.view_is('Hour')){
@@ -427,49 +405,24 @@ export default class Bar {
               'minute'
           )
 
-          // if(new_end_date.getHours() === 0 && this.task._end.getDate() == this.task._start.getDate()){
-          //   this.task._end = date_utils.add(this.task._end, '1', 'day');
-          // }
-          //
-          // let newHourlyDate = [
-          //   this.task._end.getFullYear(),
-          //   this.task._end.getMonth(),
-          //   this.task._end.getDate(),
-          //   new_end_date.getHours(),
-          //   new_end_date.getMinutes(),
-          //   new_end_date.getSeconds(),
-          //   new_end_date.getMilliseconds()
-          // ];
-
-          // new_end_date = new Date(...newHourlyDate)
-          //
           new_end_date =  ("0" + new_end_date.getHours()).slice(-2) + ':' + ("0" + new_end_date.getMinutes()).slice(-2); //new Date(...newHourlyDate)
-          //
+
+
+        } else if (this.gantt.view_is('Day')) {
+
+          new_end_date = date_utils.add(
+              new_start_date,
+              (width_in_units * this.gantt.options.step) - 24, // substract 1 day so if the bar ends on the beginning of 15, it will end on (and including) the 14. (23:59)
+              'hour'
+          );
 
         } else {
-
           new_end_date = date_utils.add(
               new_start_date,
               width_in_units * this.gantt.options.step,
               'hour'
           );
-          //
-          // let newHourlyDate = [
-          //   new_end_date.getFullYear(),
-          //   new_end_date.getMonth(),
-          //   new_end_date.getDate(),
-          //   this.task._end.getHours(),
-          //   this.task._end.getMinutes(),
-          //   this.task._end.getSeconds(),
-          //   this.task._end.getMilliseconds()
-          // ];
-          //
-          // new_end_date = new Date(...newHourlyDate)
-
         }
-
-        console.log(` NEW END DATE: ${new_end_date}`);
-        console.log(' ----------  ');
 
         return { new_start_date, new_end_date };
     }
