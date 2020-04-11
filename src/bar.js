@@ -417,13 +417,13 @@ export default class Bar {
           new_end_date =  ("0" + new_end_date.getHours()).slice(-2) + ':' + ("0" + new_end_date.getMinutes()).slice(-2); //new Date(...newHourlyDate)
 
 
-        } else if (this.gantt.view_is('Day')) {
-
-          new_end_date = date_utils.add(
-              new_start_date,
-              (width_in_units * this.gantt.options.step) - 24, // substract 1 day so if the bar ends on the beginning of 15, it will end on (and including) the 14. (23:59)
-              'hour'
-          );
+        // } else if (this.gantt.view_is('Day')) {
+        //
+        //   new_end_date = date_utils.add(
+        //       new_start_date,
+        //       (width_in_units * this.gantt.options.step) - 24, // substract 1 day so if the bar ends on the beginning of 15, it will end on (and including) the 14. (23:59)
+        //       'hour'
+        //   );
 
         } else {
           new_end_date = date_utils.add(
