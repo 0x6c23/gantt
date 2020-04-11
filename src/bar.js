@@ -147,10 +147,10 @@ export default class Bar {
         label = label + `
         ${this.task._start.getDate()}.
         ${this.task._start.getMonth()+1}.
-        ${this.task._start.getYear()} bis
+        ${this.task._start.getFullYear()} bis
         ${this.task._end.getDate()}.
         ${this.task._end.getMonth()}.
-        ${this.task._end.getYear()}
+        ${this.task._end.getFullYear()}
         `;
       } else {
         label = label + `${this.task._start.getDate()}.${this.task._start.getMonth()+1} bis ${this.task._end.getDate()}.${this.task._end.getMonth()}`
@@ -423,7 +423,7 @@ export default class Bar {
 
           new_end_date = date_utils.add(
               hourTaskStartDate,
-              (width_in_units * this.gantt.options.step) * 60,
+              (width_in_units * this.gantt.options.step) * 61,
               'minute'
           )
 

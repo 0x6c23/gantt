@@ -119,10 +119,7 @@ export default class Gantt {
             let endTime = new Date(
               endDateArray[0],
               endDateArray[1].replace('0', '') - 1,
-              endDateArray[2].replace('0', ''),
-              0,
-              0,
-              0
+              endDateArray[2].replace('0', '')
               // endDateArray[1].split(':')[0],
               // endDateArray[1].split(':')[1]
             );
@@ -166,6 +163,8 @@ export default class Gantt {
             if (task_end_values.slice(3).every(d => d === 0)) {
                 task._end = date_utils.add(task._end, 24, 'hour');
             }
+
+            console.log(task._end);
 
             // invalid flag
             if (!task.start || !task.end) {
