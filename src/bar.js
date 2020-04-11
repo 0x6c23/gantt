@@ -423,7 +423,7 @@ export default class Bar {
 
           new_end_date = date_utils.add(
               hourTaskStartDate,
-              (width_in_units * this.gantt.options.step) * 61,
+              (width_in_units * this.gantt.options.step) * 60,
               'minute'
           )
 
