@@ -107,8 +107,8 @@ export default class Gantt {
             //
             let startTime = new Date(
               startDateArray[0],
-              startDateArray[1].replace('0', '') - 1,
-              startDateArray[2].replace('0', ''),
+              startDateArray[1] - 1,
+              startDateArray[2],
               0,
               0,
               0
@@ -118,8 +118,8 @@ export default class Gantt {
 
             let endTime = new Date(
               endDateArray[0],
-              endDateArray[1].replace('0', '') - 1,
-              endDateArray[2].replace('0', ''),
+              endDateArray[1] - 1,
+              endDateArray[2],
               23,
               59,
               0

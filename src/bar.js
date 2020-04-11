@@ -53,6 +53,8 @@ export default class Bar {
               this.gantt.options.step;
         }
 
+        if(this.duration < 0) this.duration = this.duration * -1;
+
         this.width = this.gantt.options.column_width * this.duration;
 
 
