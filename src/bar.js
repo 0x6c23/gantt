@@ -60,11 +60,11 @@ export default class Bar {
                 this.duration *
                 (this.task.progress / 100) || 0;
 
-        if(this.gantt.view_is('Day')){
-          // Subtract one column width to include the last day it ends on
-          this.width          -= this.gantt.options.column_width;
-          this.progress_width -= this.gantt.options.column_width;
-        }
+        // if(this.gantt.view_is('Day')){
+        //   // Subtract one column width to include the last day it ends on
+        //   this.width          -= this.gantt.options.column_width;
+        //   this.progress_width -= this.gantt.options.column_width;
+        // }
 
         this.group = createSVG('g', {
             class: 'bar-wrapper ' + (this.task.custom_class || ''),
