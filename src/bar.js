@@ -55,16 +55,17 @@ export default class Bar {
 
         this.width = this.gantt.options.column_width * this.duration;
 
+
         this.progress_width =
             this.gantt.options.column_width *
                 this.duration *
                 (this.task.progress / 100) || 0;
 
-        // if(this.gantt.view_is('Day')){
-        //   // Subtract one column width to include the last day it ends on
-        //   this.width          -= this.gantt.options.column_width;
-        //   this.progress_width -= this.gantt.options.column_width;
-        // }
+        if(this.gantt.view_is('Day')){
+          // Add one column width to include the last day it ends on
+          this.width          += this.gantt.options.column_width;
+          this.progress_width += this.gantt.options.column_width;
+        }
 
         this.group = createSVG('g', {
             class: 'bar-wrapper ' + (this.task.custom_class || ''),
@@ -146,17 +147,25 @@ export default class Bar {
       if(this.gantt.view_is('Hour')){
         // label = label + ("0" + this.task._start.getHours()).slice(-2) + ':' + this.task._start.getMinutes() + " - " + ("0" + this.task._end.getHours()).slice(-2) + ":" + this.task._end.getMinutes();
         label = label + this.task.startDayTime + " - " + this.task.endDayTime;
+
       } else if(this.gantt.view_is('Year')) {
+
         label = label + `
         ${this.task._start.getDate()}.
         ${this.task._start.getMonth()+1}.
         ${this.task._start.getFullYear()} bis
         ${this.task._end.getDate()}.
-        ${this.task._end.getMonth()}.
+        ${this.task._end.getMonth()+1}.
         ${this.task._end.getFullYear()}
         `;
+
       } else {
-        label = label + `${this.task._start.getDate()}.${this.task._start.getMonth()+1} bis ${this.task._end.getDate()}.${this.task._end.getMonth()}`
+
+        label = label + `
+        ${this.task._start.getDate()}.
+        ${this.task._start.getMonth()+1} bis
+        ${this.task._end.getDate()}.
+        ${this.task._end.getMonth()+1}`
       }
 
       return label;
