@@ -95,6 +95,14 @@ export default class Gantt {
         this.options = Object.assign({}, default_options, options);
     }
 
+    get_scroll_pos(){
+      const parent_element = this.$svg.parentElement;
+
+      if(!parent_element) return false;
+
+      return parent_element.scrollLeft;
+    }
+
     setup_tasks(tasks) {
         // prepare tasks
         this.tasks = tasks.map((task, i) => {
@@ -213,15 +221,15 @@ export default class Gantt {
         }
     }
 
-    refresh(tasks) {
+    refresh(tasks, scrollPos = null) {
         this.setup_tasks(tasks);
-        this.change_view_mode(this.options.view_mode, true);
+        this.change_view_mode(this.options.view_mode, scrollPos);
     }
 
-    change_view_mode(mode = this.options.view_mode, refresh = false) {
+    change_view_mode(mode = this.options.view_mode, scrollPos) {
         this.update_view_scale(mode);
         this.setup_dates();
-        this.render(refresh);
+        this.render(scrollPos);
         // fire viewmode_change event
         this.trigger_event('view_change', [mode]);
     }
@@ -345,7 +353,7 @@ export default class Gantt {
         this.bind_bar_events();
     }
 
-    render(refresh) {
+    render(scrollPos) {
         this.clear();
         this.setup_layers();
         this.make_grid();
@@ -354,7 +362,7 @@ export default class Gantt {
         this.make_arrows();
         this.map_arrows_on_bars();
         this.set_width();
-        if(!refresh) this.set_scroll_position();
+        this.set_scroll_position(scrollPos);
     }
 
     setup_layers() {
@@ -699,9 +707,14 @@ export default class Gantt {
         }
     }
 
-    set_scroll_position() {
+    set_scroll_position(scrollPos) {
         const parent_element = this.$svg.parentElement;
         if (!parent_element) return;
+
+        if(scrollPos) {
+          parent_element.scrollLeft = scrollPos;
+          return;
+        }
 
         const hours_before_first_task = date_utils.diff(
             this.get_oldest_starting_date(),
