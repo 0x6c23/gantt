@@ -178,6 +178,8 @@ export default class Bar {
     }
 
     draw_label() {
+      if(!this.gantt.options.draw_labels) return;
+
       this.$bar_label = createSVG('text', {
             x: this.x + this.width / 2,
             y: this.y + this.height / 2,
@@ -316,7 +318,7 @@ export default class Bar {
           this.task.startDayTime = new_start_date;
           this.task.endDayTime = new_end_date;
 
-          this.$bar_label.innerHTML = this.get_label();
+          if(this.gantt.options.draw_labels) this.$bar_label.innerHTML = this.get_label();
 
           this.gantt.trigger_event('date_change', [
               this.task,
@@ -339,7 +341,7 @@ export default class Bar {
 
         if (!changed) return;
 
-        this.$bar_label.innerHTML = this.get_label();
+        if(this.gantt.options.draw_labels) this.$bar_label.innerHTML = this.get_label();
 
         var secondsToAdd = 0;
 
