@@ -87,6 +87,7 @@ export default class Gantt {
             date_format: 'YYYY-MM-DD',
             popup_trigger: 'click',
             disable_popup: false,
+            draw_labels: false,
             custom_popup_html: null,
             current_day: date_utils.today(),
             language: 'en'

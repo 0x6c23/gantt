@@ -104,7 +104,9 @@ export default class Bar {
     draw() {
         this.draw_bar();
         this.draw_progress_bar();
-        this.draw_label();
+
+        if(this.gantt.options.draw_labels) this.draw_label();
+
         this.draw_resize_handles();
     }
 
