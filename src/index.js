@@ -70,7 +70,12 @@ export default class Gantt {
         // popup wrapper
         this.popup_wrapper = document.createElement('div');
         this.popup_wrapper.classList.add('popup-wrapper');
+
+        this.hover_popup_wrapper = document.createElement('div');
+        this.hover_popup_wrapper.classList.add('hover-popup-wrapper');
+
         this.$container.appendChild(this.popup_wrapper);
+        this.$container.appendChild(this.hover_popup_wrapper);
     }
 
     setup_options(options) {
@@ -89,6 +94,7 @@ export default class Gantt {
             disable_popup: false,
             draw_labels: false,
             custom_popup_html: null,
+            custom_hover_popup_html: null,
             current_day: date_utils.today(),
             language: 'en'
         };
@@ -202,7 +208,12 @@ export default class Gantt {
                 task.id = generate_id(task);
             }
 
-            if(task.customId) task.id = task.customId;
+
+            if(task.customId) {
+                task.originalId = task.id;
+                task.id = task.customId;
+            }
+
 
 //            console.log('Setting up task... starttime: ', task._start);
 
@@ -1027,8 +1038,22 @@ export default class Gantt {
         this.popup.show(options);
     }
 
+    show_hover_popup(options) {
+        if (!this.hoverPopup) {
+            this.hoverPopup = new Popup(
+                this.hover_popup_wrapper,
+                this.options.custom_hover_popup_html
+            );
+        }
+        this.hoverPopup.show(options);
+    }
+
     hide_popup() {
         this.popup && this.popup.hide();
+    }
+
+    hide_hover_popup() {
+        this.hoverPopup && this.hoverPopup.hide();
     }
 
     trigger_event(event, args) {

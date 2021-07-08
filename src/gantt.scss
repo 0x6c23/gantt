@@ -124,8 +124,39 @@
 
 .gantt-container {
 	position: relative;
-	overflow: auto;
+	//overflow: auto;
 	font-size: 12px;
+
+	.hover-popup-wrapper {
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 99999999;
+		background: rgba(0, 0, 0, 0.8);
+		padding: 0;
+		color: #959da5;
+		pointer-events: none;
+		border-radius: 3px;
+		text-align: left;
+
+		.title {
+			border-bottom: 3px solid #a3a3ff;
+			padding: 10px;
+		}
+
+		.subtitle {
+			padding: 10px;
+			color: #dfe2e5;
+		}
+
+		.pointer {
+			position: absolute;
+			height: 5px;
+			margin: 0 0 0 -5px;
+			border: 5px solid transparent;
+			border-top-color: rgba(0, 0, 0, 0.8);
+		}
+	}
 
 	.popup-wrapper {
 		position: absolute;
