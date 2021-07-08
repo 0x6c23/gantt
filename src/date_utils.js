@@ -21,6 +21,20 @@ const month_names = {
         'November',
         'December'
     ],
+    de: [
+        'Januar',
+        'Februar',
+        'März',
+        'April',
+        'Mai',
+        'Juni',
+        'Juli',
+        'August',
+        'September',
+        'Oktober',
+        'November',
+        'Dezember'
+    ],
     es: [
         'Enero',
         'Febrero',
@@ -117,8 +131,8 @@ export default {
             const parts = date.split(' ');
 
             date_parts = parts[0]
-                .split(date_separator)
-                .map(val => parseInt(val, 10));
+            .split(date_separator)
+            .map(val => parseInt(val, 10));
             time_parts = parts[1] && parts[1].split(time_separator);
 
             // month is 0 indexed
@@ -179,13 +193,13 @@ export default {
         const formatted_values = [];
 
         Object.keys(format_map)
-            .sort((a, b) => b.length - a.length) // big string first
-            .forEach(key => {
-                if (str.includes(key)) {
-                    str = str.replace(key, `$${formatted_values.length}`);
-                    formatted_values.push(format_map[key]);
-                }
-            });
+              .sort((a, b) => b.length - a.length) // big string first
+              .forEach(key => {
+                  if (str.includes(key)) {
+                      str = str.replace(key, `$${formatted_values.length}`);
+                      formatted_values.push(format_map[key]);
+                  }
+              });
 
         formatted_values.forEach((value, i) => {
             str = str.replace(`$${i}`, value);
@@ -279,16 +293,16 @@ export default {
     },
 
     get_hour_date(date, dayTime) {
-      const vals = this.get_date_values(new Date()).slice(0, 3);
-      var today = new Date(...vals);
+        const vals = this.get_date_values(new Date()).slice(0, 3);
+        var today = new Date(...vals);
 
-      return [
-        today.getFullYear(),
-        today.getMonth(),
-        today.getDate(),
-        dayTime !== null ? dayTime.split(':')[0] : date.getHours(),
-        dayTime !== null ? dayTime.split(':')[1] : date.getMinutes()
-      ];
+        return [
+            today.getFullYear(),
+            today.getMonth(),
+            today.getDate(),
+            dayTime !== null ? dayTime.split(':')[0] : date.getHours(),
+            dayTime !== null ? dayTime.split(':')[1] : date.getMinutes()
+        ];
     },
 
     get_date_values(date) {
